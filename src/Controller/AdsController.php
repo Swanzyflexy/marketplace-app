@@ -28,7 +28,7 @@ class AdsController extends AbstractController
     /**
      * Show Ads Form.
      */
-    #[Route('/ads/create', name: 'app_ads_create', methods: ['GET', 'HEAD'])]
+    #[Route('/ads/create', name: 'app_ads_create', methods: ['GET', 'HEAD'], defaults: [])]
     public function showAdsForm(): Response
     {
         $ads = new Ads();
