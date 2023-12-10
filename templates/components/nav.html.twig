@@ -56,7 +56,7 @@
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Ads
-														                                                                Details</a>
+																																																																																				                                                                Details</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Ads Post</a>
@@ -81,11 +81,11 @@
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Mail
-														                                                                Success</a>
+																																																																																				                                                                Success</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Comming
-														                                                                Soon</a>
+																																																																																				                                                                Soon</a>
 												</li>
 											</ul>
 										</li>
@@ -94,7 +94,7 @@
 												<li class="mega-menu-title">Dashboard</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Account
-														                                                                Overview</a>
+																																																																																				                                                                Overview</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">My Profile</a>
@@ -104,21 +104,21 @@
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Favorite
-														                                                                Ads</a>
+																																																																																				                                                                Ads</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Ad post</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Bookmarked
-														                                                                Ad</a>
+																																																																																				                                                                Ad</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Messages</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Close
-														                                                                account</a>
+																																																																																				                                                                account</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Invoice</a>
@@ -138,19 +138,30 @@
 										</li>
 										<li class="nav-item">
 											<a href="javascript:void(0)">Blog Single
-												                                                        Sibebar</a>
+																																																																								                                                        Sibebar</a>
 										</li>
 									</ul>
 								</li>
 							</ul>
 						</div>
 						<!-- navbar collapse -->
-						<div class="login-button">
-							<ul>
-								<li><a href="login.html"><i class="lni lni-enter"></i>Login</a></li>
-								<li><a href="sign-up.html"><i class="lni lni-user"></i>Register</a></li>
-							</ul>
-						</div>
+						{% if app.user %}
+							<div class="login-button">
+								<ul>
+									You are logged in as
+									{{ app.user.fullname }},
+									<a href="{{ path('app_logout') }}">Logout</a>
+								</ul>
+							</div>
+						{% else %}
+							<div class="login-button">
+								<ul>
+									<li><a href="{{path('app_login')}}"><i class="lni lni-enter"></i>Login</a></li>
+									<li><a href="sign-up.html"><i class="lni lni-user"></i>Register</a></li>
+								</ul>
+							</div>
+						{% endif %}
+
 						<div class="button header-button">
 							<a href="javascript:void(0)" class="btn">Post an Ad</a>
 						</div>

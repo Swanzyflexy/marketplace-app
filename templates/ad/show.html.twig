@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ad{% endblock %}
+
+{% block body %}
+    <h1>Ad</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ad.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ ad.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ ad.description }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ ad.status }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ ad.price }}</td>
+            </tr>
+            <tr>
+                <th>Ad_city</th>
+                <td>{{ ad.adCity }}</td>
+            </tr>
+            <tr>
+                <th>Ad_country</th>
+                <td>{{ ad.adCountry }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ ad.createdAt ? ad.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ ad.updatedAt ? ad.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ad_index') }}">back to list</a>
+
+    <a href="{{ path('app_ad_edit', {'id': ad.id}) }}">edit</a>
+
+    {{ include('ad/_delete_form.html.twig') }}
+{% endblock %}

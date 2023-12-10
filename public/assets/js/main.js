@@ -5,13 +5,13 @@ Author: GrayGrids
 
 (function () {
 
-	"use strict";
+    "use strict";
 
-	//===== Prealoder
+    //===== Prealoder
 
-	window.onload = function () {
-		window.setTimeout(fadeout, 200);
-	}
+    window.onload = function () {
+        window.setTimeout(fadeout, 200);
+    }
 
 
     function fadeout() {
@@ -42,14 +42,14 @@ Author: GrayGrids
         }
     };
 
-     //===== mobile-menu-btn
-	let navbarToggler = document.querySelector(".mobile-menu-btn");
-	navbarToggler.addEventListener('click', function () {
-		navbarToggler.classList.toggle("active");
-	});
-    
+    //===== mobile-menu-btn
+    let navbarToggler = document.querySelector(".mobile-menu-btn");
+    navbarToggler.addEventListener('click', function () {
+        navbarToggler.classList.toggle("active");
+    });
+
     // WOW active
     new WOW().init();
-    
+
 })();
 

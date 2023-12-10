@@ -1,5 +1,8 @@
 twig:
-    default_path: '%kernel.project_dir%/templates'
+    default_path: "%kernel.project_dir%/templates"
+    globals:
+        name: Ikole's Marketplace
+        url: http://ikoleproj.lcl/
 
 when@test:
     twig:

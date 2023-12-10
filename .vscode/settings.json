@@ -1,0 +1,17 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "MySQL",
+      "name": "default",
+      "database": "marketplaeApp",
+      "username": "og",
+      "connectString": "mysql://og:koolup23@localhost:3306/marketplaceApp?serverVersion=8.0.32&charset=utf8mb4"
+    }
+  ]
+}
