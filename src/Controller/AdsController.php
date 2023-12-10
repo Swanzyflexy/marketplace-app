@@ -20,7 +20,7 @@ class AdsController extends AbstractController
         $ads->setPrice(1000);
         $ads->setDescription('Brand New Iphone 15 Pro with 24mp tri-camera');
 
-        return $this->render('index.html.twig', [
+        return $this->render('/pages/index.html.twig', [
             'ads' => $ads,
         ]);
     }
