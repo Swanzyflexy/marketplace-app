@@ -5,7 +5,7 @@
 				<div class="nav-inner">
 					<nav class="navbar navbar-expand-lg">
 						<a class="navbar-brand" href="/">
-							<img src="assets/images/logo/logo.svg" alt="Logo">
+							<img src="{{asset('assets/images/logo/logo.svg')}}" alt="Logo">
 						</a>
 						<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 							<span class="toggler-icon"></span>
@@ -56,7 +56,7 @@
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Ads
-																																																																																				                                                                Details</a>
+																																																																																																																																																																																						                                                                Details</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Ads Post</a>
@@ -81,11 +81,11 @@
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Mail
-																																																																																				                                                                Success</a>
+																																																																																																																																																																																						                                                                Success</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Comming
-																																																																																				                                                                Soon</a>
+																																																																																																																																																																																						                                                                Soon</a>
 												</li>
 											</ul>
 										</li>
@@ -94,7 +94,7 @@
 												<li class="mega-menu-title">Dashboard</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Account
-																																																																																				                                                                Overview</a>
+																																																																																																																																																																																						                                                                Overview</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">My Profile</a>
@@ -104,21 +104,21 @@
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Favorite
-																																																																																				                                                                Ads</a>
+																																																																																																																																																																																						                                                                Ads</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Ad post</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Bookmarked
-																																																																																				                                                                Ad</a>
+																																																																																																																																																																																						                                                                Ad</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Messages</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Close
-																																																																																				                                                                account</a>
+																																																																																																																																																																																						                                                                account</a>
 												</li>
 												<li class="nav-item">
 													<a href="javascript:void(0)">Invoice</a>
@@ -138,7 +138,7 @@
 										</li>
 										<li class="nav-item">
 											<a href="javascript:void(0)">Blog Single
-																																																																								                                                        Sibebar</a>
+																																																																																																																																																												                                                        Sibebar</a>
 										</li>
 									</ul>
 								</li>
@@ -147,9 +147,12 @@
 						<!-- navbar collapse -->
 						{% if app.user %}
 							<div class="login-button">
-								<ul>
+								<ul class="text-end">
 									You are logged in as
 									{{ app.user.fullname }},
+									<br>
+									<a href="{{ path('app_dashboard') }}"><img src="{{ app.user.profileimage }}" alt="#" width="30">&nbsp;Dashboard</a>
+									|
 									<a href="{{ path('app_logout') }}">Logout</a>
 								</ul>
 							</div>
@@ -157,13 +160,13 @@
 							<div class="login-button">
 								<ul>
 									<li><a href="{{path('app_login')}}"><i class="lni lni-enter"></i>Login</a></li>
-									<li><a href="sign-up.html"><i class="lni lni-user"></i>Register</a></li>
+									<li><a href="{{path('app_register')}}"><i class="lni lni-user"></i>Register</a></li>
 								</ul>
 							</div>
 						{% endif %}
 
 						<div class="button header-button">
-							<a href="javascript:void(0)" class="btn">Post an Ad</a>
+							<a href="{{path('app_ad_new')}}" class="btn">Post an Ad</a>
 						</div>
 					</nav>
 					<!-- navbar -->

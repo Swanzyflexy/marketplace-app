@@ -4697,10 +4697,11 @@ blockquote .shape {
   border-radius: 50%;
   position: absolute;
   left: 30px;
-  /* top: 50%; */
+  top: 50%;
   -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
   text-align: center;
+  /* padding-block: 20px; */
 }
 
 .dashboard .main-content .details-lists .single-list .list-icon i {
@@ -4708,7 +4709,6 @@ blockquote .shape {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
-  padding-top: 50%;
   background-image: linear-gradient(45deg, #15c0b0, #3fdd90);
 }
 
@@ -4824,6 +4824,7 @@ blockquote .shape {
   opacity: 0;
   visibility: hidden;
   border-radius: 3px;
+  padding-block: 2px;
 }
 
 .dashboard .main-content .activity-log ul li .remove a:hover {
@@ -5130,7 +5131,7 @@ blockquote .shape {
 
 .default-form-style .form-group.button .btn {
   padding: 13px 30px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
 }
 
 .default-form-style .form-group.button .btn.alt-btn {

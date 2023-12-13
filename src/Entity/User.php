@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
@@ -20,48 +21,74 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Full name cannot be blank')]
+    #[Assert\Length(max: 255, maxMessage: 'Full name cannot be longer than {{ limit }} characters')]
     private ?string $full_name = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'Username cannot be blank')]
+    #[Assert\Length(min: 3, max: 255, minMessage: 'Username must be at least {{ limit }} characters long', maxMessage: 'Username cannot be longer than {{ limit }} characters')]
     private ?string $username = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message: 'Email cannot be blank')]
+    #[Assert\Email(message: 'Invalid email address')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Phone cannot be blank')]
+    #[Assert\Regex(
+        pattern: "/^\d{10}$/",
+        message: 'Phone must be a 10-digit number'
+    )]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Status cannot be blank')]
     private ?string $status = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Ad::class, orphanRemoval: true)]
     private Collection $Ads;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Address cannot be longer than {{ limit }} characters')]
     private ?string $address = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'City cannot be blank')]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'State cannot be blank')]
     private ?string $state = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Zipcode cannot be blank')]
+    #[Assert\Regex(
+        pattern: "/^\d{5}$/",
+        message: 'Zipcode must be a 5-digit number'
+    )]
     private ?string $zipcode = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Country cannot be blank')]
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(message: 'Profile image must be a valid URL')]
     private ?string $profile_image = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Roles cannot be blank')]
+    #[Assert\Choice(choices: ['ROLE_USER', 'ROLE_ADMIN'], multiple: true, message: 'Invalid roles')]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Password cannot be blank')]
+    #[Assert\Length(min: 8, minMessage: 'Password must be at least {{ limit }} characters long')]
     private ?string $password = null;
 
     #[ORM\Column]
@@ -262,7 +289,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles = ['ROLE_USER'];
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }

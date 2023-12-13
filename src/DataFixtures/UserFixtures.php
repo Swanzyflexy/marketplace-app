@@ -22,7 +22,7 @@ class UserFixtures extends Fixture
         $user->setEmail('a@a.com');
         $user->setFullName('Adekola Adeniyi');
         $user->setPhone('9999999999');
-        $user->setRoles(['ROLE_USER']);
+        $user->setRoles(['0' => 'ROLE_USER']);
         $user->setCity('manchester');
         $user->setState('England');
         $user->setZipcode('MNC0093');

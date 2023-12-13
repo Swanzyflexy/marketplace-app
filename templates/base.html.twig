@@ -1,44 +1,43 @@
-<div>
-	<!DOCTYPE html>
-	<html lang="en">
-		<head>
-			<meta charset="utf-8"/>
-			<meta http-equiv="x-ua-compatible" content="ie=edge"/>
-			<title>
-				{% block title %}Welcome!
-				{% endblock %}
-			</title>
-			<meta name="description" content=""/>
-			<meta name="viewport" content="width=device-width, initial-scale=1"/>
-			<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.svg"/>
-			<!-- Place favicon.ico in the root directory -->
-
-			<!-- Web Font -->
-			<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> <link
-			href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-
-			<!-- ========================= CSS here ========================= -->
-			<link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
-			<link rel="stylesheet" href="assets/css/LineIcons.2.0.css"/>
-			<link rel="stylesheet" href="assets/css/animate.css"/>
-			<link rel="stylesheet" href="assets/css/tiny-slider.css"/>
-			<link rel="stylesheet" href="assets/css/glightbox.min.css"/>
-			<link rel="stylesheet" href="assets/css/main.css"/>
-
-		</head>
-		<body>
-			<!-- Preloader -->
-			{% include 'components/preloader.html.twig' %}
-			<!-- End Preloader -->
-			<!-- Start Header Area -->
-			{% include 'components/nav.html.twig' %}
-			<!-- End Header Area -->
-			<!--Start Main Content Area-->{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+		<title>
+			{% block title %}Welcome!
 			{% endblock %}
-			<!--End Main Content Area-->
-			<!-- Start Footer Area -->
-		{% include 'components/footer.html.twig' %}
-			<!-- End Footer Area -->
+		</title>
+		<meta name="description" content=""/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/favicon.svg')}}"/>
+		<!-- Place favicon.ico in the root directory -->
 
-		</body>
-	</html>
+		<!-- Web Font -->
+		<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet"> <link
+		href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+		<!-- ========================= CSS here ========================= -->
+		<link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}"/>
+		<link rel="stylesheet" href="{{asset('assets/css/LineIcons.2.0.css')}}"/>
+		<link rel="stylesheet" href="{{asset('assets/css/animate.css')}}"/>
+		<link rel="stylesheet" href="{{asset('assets/css/tiny-slider.css')}}"/>
+		<link rel="stylesheet" href="{{asset('assets/css/glightbox.min.css')}}"/>
+		<link rel="stylesheet" href="{{asset('assets/css/main.css')}}"/>
+
+	</head>
+	<body>
+		<!-- Preloader -->
+		{% include 'components/preloader.html.twig' %}
+		<!-- End Preloader -->
+		<!-- Start Header Area -->
+		{% include 'components/nav.html.twig' %}
+
+		<!-- End Header Area -->
+		<!--Start Main Content Area-->{% block body %}
+		{% endblock %}
+		<!--End Main Content Area-->
+		<!-- Start Footer Area -->
+	{% include 'components/footer.html.twig' %}
+		<!-- End Footer Area -->
+	</body>
+</html>
