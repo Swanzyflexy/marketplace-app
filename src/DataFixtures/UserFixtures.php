@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
             $user,
             'password1'
         ));
-        $user->setCreatedAt(new \DateTimeImmutable());
+        $user->setCreatedAt();
         $user->setIsVerified(true);
         $manager->persist($user);
 

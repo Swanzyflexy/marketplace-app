@@ -38,7 +38,7 @@ class Ad
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'ad', targetEntity: AdImage::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'ad', targetEntity: AdImage::class, orphanRemoval: true, cascade: ['persist', 'remove'])]
     #[Assert\Valid]
     private Collection $adImages;
 
@@ -57,11 +57,11 @@ class Ad
     #[ORM\Column]
     #[Assert\NotNull(message: 'Created at cannot be null')]
     // #[Assert\DateTime(message: 'Created at must be a valid DateTime')]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
     // #[Assert\DateTime(message: 'Updated at must be a valid DateTime')]
-    private ?\DateTimeImmutable $updated_at = null;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'ads')]
     #[ORM\JoinColumn(nullable: false)]
@@ -206,26 +206,28 @@ class Ad
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAt(): void
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeImmutable $updated_at): static
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt(): void
     {
-        $this->updated_at = $updated_at;
-
-        return $this;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 
     public function getCategory(): ?AdCategory

@@ -26,20 +26,6 @@ class UserxController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_userx_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('userx/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
     }
 
     #[Route('/{id}', name: 'app_userx_show', methods: ['GET'])]
@@ -66,22 +52,5 @@ class UserxController extends AbstractController
             'user' => $user,
             'form' => $form,
         ]);
-    }
-
-    #[Route('/{id}/delete', name: 'app_userx_delete_form', methods: ['GET'])]
-    public function deleteForm()
-    {
-        return $this->render('profile/delete-account.html.twig');
-    }
-
-    #[Route('/{id}', name: 'app_userx_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($user);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_userx_index', [], Response::HTTP_SEE_OTHER);
     }
 }

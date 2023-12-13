@@ -14,20 +14,20 @@ class AdImage
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $ad_image_name = null;
+    private ?string $adImageName = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $ad_image_path = null;
+    private ?string $adImagePath = null;
 
     #[ORM\ManyToOne(inversedBy: 'adImages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Ad $ad = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updated_at = null;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -36,24 +36,24 @@ class AdImage
 
     public function getAdImageName(): ?string
     {
-        return $this->ad_image_name;
+        return $this->adImageName;
     }
 
-    public function setAdImageName(string $ad_image_name): static
+    public function setAdImageName(string $adImageName): static
     {
-        $this->ad_image_name = $ad_image_name;
+        $this->adImageName = $adImageName;
 
         return $this;
     }
 
     public function getAdImagePath(): ?string
     {
-        return $this->ad_image_path;
+        return $this->adImagePath;
     }
 
-    public function setAdImagePath(string $ad_image_path): static
+    public function setAdImagePath(string $adImagePath): static
     {
-        $this->ad_image_path = $ad_image_path;
+        $this->adImagePath = $adImagePath;
 
         return $this;
     }
@@ -72,25 +72,27 @@ class AdImage
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAt(): void
     {
-        $this->created_at = $created_at;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): static
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAt(): void
     {
-        $this->updated_at = $updated_at;
-
-        return $this;
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }

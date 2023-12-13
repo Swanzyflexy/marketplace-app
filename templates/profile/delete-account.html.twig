@@ -32,7 +32,7 @@
 				</div>
 				<div class="col-lg-9 col-md-8 col-12">
 					<div class="main-content">
-						<form method="post" action="{{ path('app_userx_delete', {'id': app.user.id}) }}" onsubmit="return confirm('Are you sure you want to delete your account 😖🫣?');">
+						<form method="post" action="{{ path('app_user_delete', {'id': app.user.id}) }}" onsubmit="return confirm('Are you sure you want to delete your account 😖🫣?');">
 							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
 							<div class="dashboard-block close-content mt-0">
 								<h2>Delete Your Account</h2>

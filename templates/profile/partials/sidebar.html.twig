@@ -43,7 +43,7 @@
 					Edit Profile</a>
 			</li>
 			<li>
-				<a href="{{path('app_userx_delete_form', {'id': app.user.id}) }}" {% if app.request.attributes.get('_route') == 'app_userx_delete_form' %} class="active" {% endif %}>
+				<a href="{{path('app_user_delete', {'id': app.user.id}) }}" {% if app.request.attributes.get('_route') == 'app_user_delete' %} class="active" {% endif %}>
 					<i class="lni lni-trash"></i>
 					Close account</a>
 			</li>

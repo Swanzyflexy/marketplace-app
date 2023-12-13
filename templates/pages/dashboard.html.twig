@@ -23,7 +23,7 @@
 		</div>
 	</div>
 	<!-- End Breadcrumbs -->
-	{% if _validation_errors is not empty %}
+	{# {% if _validation_errors is not empty %}
 		<div class="error">
 			<ul>
 				{% for error in _validation_errors %}
@@ -31,7 +31,7 @@
 				{% endfor %}
 			</ul>
 		</div>
-	{% endif %}
+	{% endif %} #}
 	{% for flashMessage in app.session.flashbag.get('success') %}
 		<div class="alert alert-success">
 			{{ flashMessage }}

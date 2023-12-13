@@ -46,6 +46,7 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
         - { path: ^/ad/new, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
+        - { path: ^/ad/myAds, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
 
 when@test:
     security:

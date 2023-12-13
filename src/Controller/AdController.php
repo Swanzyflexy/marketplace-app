@@ -28,7 +28,7 @@ class AdController extends AbstractController
         $this->twig = $twig;
     }
 
-    #[Route('/', name: 'app_ad_index', methods: ['GET'])]
+    #[Route('/myAds', name: 'app_ad_index', methods: ['GET'])]
     public function index(AdRepository $adRepository): Response
     {
         return $this->render('profile/listAds.html.twig', [
@@ -66,6 +66,7 @@ class AdController extends AbstractController
             ->findBy(['parentCategory' => null]);
 
         if ($request->isMethod('POST')) {
+            // dd($request);
             $ad->setTitle($request->request->get('title'));
             $ad->setDescription($request->request->get('description'));
             $ad->setPrice($request->request->get('price'));
@@ -75,14 +76,16 @@ class AdController extends AbstractController
             $ad->setStatus('Pending Approval');
             $ad->setCategory($em->getRepository(AdCategory::class)->find($request->request->get('category')));
             $ad->setUser($this->getUser());
-            $ad->setCreatedAt(new \DateTimeImmutable());
+            $ad->setCreatedAt();
             $adImagesData = $request->files->get('ad_images');
             $errors = $validator->validate($ad);
-            // $errors[] = null;
+
             if (count($errors) === 0) {
                 $uploadDirectory = $this->getParameter('kernel.project_dir').'/public/uploads';
-                dd($uploadDirectory);
-
+                if (!is_dir($uploadDirectory)) {
+                    mkdir($uploadDirectory, 0777, true);
+                }
+                // dd($uploadDirectory);
                 foreach ($adImagesData as $imageData) {
                     $originalFilename = pathinfo($imageData->getClientOriginalName(), PATHINFO_FILENAME);
                     $newFilename = $originalFilename.'-'.uniqid().'.'.$imageData->guessExtension();
@@ -91,19 +94,18 @@ class AdController extends AbstractController
                             $uploadDirectory,
                             $newFilename
                         );
-                        $adImage = new AdImage();
-                        $adImage->setAdImageName($newFilename);
-                        $adImage->setAdImagePath($uploadDirectory);
-                        $adImage->setAd($ad);
-                        $adImage->setCreatedAt(new \DateTimeImmutable());
-                        $em->persist($adImage);
-                        $em->flush();
                     } catch (FileException $e) {
                         // Handle file upload error
-                        $this->addFlash('error', 'System Encountered Error while creating Ad!');
+                        $this->addFlash('error', 'System Encountered Error while Uploading Ad Images!');
 
                         return $this->redirectToRoute('app_ad_new');
                     }
+                    $adImage = new AdImage();
+                    $adImage->setAdImageName($newFilename);
+                    $adImage->setAdImagePath($uploadDirectory.'/'.$newFilename);
+                    $adImage->setAd($ad);
+                    $adImage->setCreatedAt();
+                    $em->persist($adImage);
                 }
                 $em->persist($ad);
                 $em->flush();
@@ -118,14 +120,15 @@ class AdController extends AbstractController
                 $validationErrors[$propertyPath] = $error->getMessage();
             }
 
-            $this->addFlash('errors', $validationErrors);
+            $request->attributes->set('_validation_errors', $validationErrors);
             $request->attributes->set('_old_values', $request->request->all());
         }
 
         return $this->render('profile/addnewlisting.html.twig', [
+            // 'ad' => $ad,
             'adImages' => $ad->getAdImages(),
             'categories' => $categories,
-            '_old_values' => $request->attributes->get('_old_values'),
+            '_validation_errors' => $request->attributes->get('_validation_errors'),
         ]);
     }
 
