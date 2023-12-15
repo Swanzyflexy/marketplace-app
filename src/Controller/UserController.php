@@ -28,12 +28,6 @@ class UserController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}/delete', name: 'app_user_delete_form', methods: ['GET'])]
-    // public function deleteForm()
-    // {
-    //     return $this->render('profile/delete-account.html.twig');
-    // }
-
     #[Route('{id}/delete', name: 'app_user_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
