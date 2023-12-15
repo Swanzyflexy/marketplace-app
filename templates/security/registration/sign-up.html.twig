@@ -23,7 +23,14 @@
 		</div>
 	</div>
 	<!-- End Breadcrumbs -->
-
+	{% if _validation_errors is not empty %}
+		<div class="alert alert-danger mb-0">
+			{% for error in _validation_errors %}
+				<li>{{ error }}</li>
+			{% endfor %}
+		</div>
+	{% endif %}
+	{{ include('components/alerts.html.twig') }}
 	<!-- start Registration section -->
 	<section class="login registration section">
 		<div class="container">
@@ -31,25 +38,62 @@
 				<div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-12">
 					<div class="form-head">
 						<h4 class="title">Registration</h4>
-						<form action="#!" method="post">
+						<form action="#" method="post" enctype="multipart/form-data">
 							<div class="socila-login">
 								<ul>
 									<li><a href="javascript:void(0)" class="facebook"><i class="lni lni-facebook-original"></i>Import
-																																																																																													                                                From Facebook</a></li>
+																																																																																																																																																																													                                                From Facebook</a></li>
 									<li><a href="javascript:void(0)" class="google"><i class="lni lni-google"></i>Import From Google
-																																																																																													                                                Plus</a></li>
+																																																																																																																																																																													                                                Plus</a></li>
 								</ul>
 							</div>
 							<div class="alt-option">
 								<span>Or</span>
 							</div>
 							<div class="form-group">
-								<label>Name</label>
-								<input name="fullname" type="text">
+								<label>Full Name</label>
+								<input name="full_name" type="text">
+							</div>
+							<div class="form-group">
+								<label>Username</label>
+								<input name="username" type="text">
 							</div>
 							<div class="form-group">
 								<label>Email</label>
 								<input name="email" type="email">
+							</div>
+							<div class="form-group">
+								<label>Phone</label>
+								<input name="phone" type="tel">
+							</div>
+							<div class="form-group">
+								<label>Profile Image (Optional)</label>
+								<input name="profile_image" type="file">
+							</div>
+							<div class="form-group">
+								<label>Address</label>
+								<input name="address" type="text" placeholder="House Number, Street (Optional)">
+							</div>
+							<div class="form-group">
+								<label>City</label>
+								<input name="city" type="text">
+							</div>
+							<div class="form-group">
+								<label>State</label>
+								<input name="state" type="text">
+							</div>
+							<div class="form-group">
+								<label>Zipcode</label>
+								<input name="zipcode" type="text">
+							</div>
+							<div class="form-group">
+								<label>Country</label>
+								<select class="user-chosen-select" name="country" id="country">
+									<option value="">Select a Country</option>
+									{% for country in countries() %}
+										<option value="{{ country.code }}">{{ country.name }}</option>
+									{% endfor %}
+								</select>
 							</div>
 							<div class="form-group">
 								<label>Password</label>
@@ -66,7 +110,7 @@
 											<input type="checkbox" class="form-check-input width-auto" id="exampleCheck1">
 											<label class="form-check-label">Agree to our
 												<a href="javascript:void(0)">Terms and
-																																																																																																																								                                                        Conditions</a>
+																																																																																																																																																																																																																																                                                        Conditions</a>
 											</label>
 										</div>
 									</div>
@@ -76,7 +120,7 @@
 								<button type="submit" class="btn">Registration</button>
 							</div>
 							<p class="outer-link">Already have an account?
-								<a href="login.html">
+								<a href="{{path('app_login')}}">
 									Login Now</a>
 							</p>
 						</form>

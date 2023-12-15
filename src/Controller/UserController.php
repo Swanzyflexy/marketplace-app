@@ -7,11 +7,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/profile')]
 class UserController extends AbstractController
 {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private UserPasswordHasherInterface $passwordHasher,
+        private ValidatorInterface $validator
+    ) {
+    }
+
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(): Response
     {
@@ -20,27 +29,26 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-profile', name: 'app_edit_profile')]
+    #[Route('/edit-profile', name: 'app_edit_profile', methods: ['GET', 'POST'])]
     public function profile(): Response
     {
         return $this->render('profile/profile-settings.html.twig', [
-            'controller_name' => 'UserController',
         ]);
     }
 
     #[Route('{id}/delete', name: 'app_user_delete', methods: ['GET', 'POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, User $user): Response
     {
         if ($request->isMethod('POST')) {
-            $entityManager->remove($user);
-            $entityManager->flush();
+            $this->em->remove($user);
+            $this->em->flush();
 
             if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-                $entityManager->remove($user);
-                $entityManager->flush();
+                $this->em->remove($user);
+                $this->em->flush();
             }
 
-            return $this->redirectToRoute('app_userx_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('profile/delete-account.html.twig');

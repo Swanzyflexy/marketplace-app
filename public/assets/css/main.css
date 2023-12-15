@@ -4938,7 +4938,7 @@ blockquote .shape {
   margin-bottom: 30px;
 }
 
-/* Dasshboard Sidebar */
+/* Dashboard Sidebar */
 .dashboard-sidebar {
   background: #fff;
   border: 1px solid #eee;
@@ -4954,8 +4954,8 @@ blockquote .shape {
 }
 
 .dashboard-sidebar .user-image img {
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
   border-radius: 3px;
   position: absolute;
   left: 30px;
@@ -4966,7 +4966,7 @@ blockquote .shape {
   font-size: 15px;
   font-weight: 600;
   color: #081828;
-  margin-top: 5px;
+  /* margin-top: 5px; */
 }
 
 .dashboard-sidebar .user-image h3 span {

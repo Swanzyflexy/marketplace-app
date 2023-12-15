@@ -23,26 +23,7 @@
 		</div>
 	</div>
 	<!-- End Breadcrumbs -->
-	{# {% if _validation_errors is not empty %}
-		<div class="error">
-			<ul>
-				{% for error in _validation_errors %}
-					<li>{{ error }}</li>
-				{% endfor %}
-			</ul>
-		</div>
-	{% endif %} #}
-	{% for flashMessage in app.session.flashbag.get('success') %}
-		<div class="alert alert-success">
-			{{ flashMessage }}
-		</div>
-	{% endfor %}
-
-	{% for flashMessage in app.session.flashbag.get('error') %}
-		<div class="alert alert-danger">
-			{{ flashMessage }}
-		</div>
-	{% endfor %}
+	{{ include('components/alerts.html.twig') }}
 	<!-- Start Dashboard Section -->
 	<section class="dashboard section">
 		<div class="container">
@@ -70,7 +51,7 @@
 									<a href="profile-settings.html">
 										<i class="lni lni-pencil-alt"></i>
 										Edit
-																																								                                            Profile</a>
+																																																		                                            Profile</a>
 								</li>
 								<li>
 									<a href="my-items.html">
@@ -228,7 +209,7 @@
 												<i class="lni lni-alarm"></i>
 											</div>
 											<a href="javascript:void(0)" class="title">You subscribe as a pro
-																																																                                                    user!</a>
+																																																												                                                    user!</a>
 											<span class="time">1 day Ago</span>
 											<span class="remove">
 												<a href="javascript:void(0)">

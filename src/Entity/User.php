@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[UniqueEntity(fields: ['username', 'email'], message: 'This User Exists in the system')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -37,10 +37,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Phone cannot be blank')]
-    #[Assert\Regex(
-        pattern: "/^\d{10}$/",
-        message: 'Phone must be a 10-digit number'
-    )]
+    // #[Assert\Regex(
+    //     pattern: "/^\d{17}$/",
+    //     message: 'Phone must be a 17-digit number'
+    // )]
     private ?string $phone = null;
 
     #[ORM\Column(length: 255)]
@@ -64,10 +64,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Zipcode cannot be blank')]
-    #[Assert\Regex(
-        pattern: "/^\d{5}$/",
-        message: 'Zipcode must be a 5-digit number'
-    )]
+    // #[Assert\Regex(
+    //     pattern: "/^\d{5}$/",
+    //     message: 'Zipcode must be a 8-digit number'
+    // )]
     private ?string $zipcode = null;
 
     #[ORM\Column(length: 255)]
@@ -100,9 +100,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ActivityLog::class)]
+    private Collection $activityLogs;
+
     public function __construct()
     {
         $this->Ads = new ArrayCollection();
+        $this->activityLogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -316,6 +320,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isActive(): bool
+    {
+        return $this->status === 'active';
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
     /**
      * @ORM\PrePersist
      */
@@ -356,5 +370,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, ActivityLog>
+     */
+    public function getActivityLogs(): Collection
+    {
+        return $this->activityLogs;
+    }
+
+    public function addActivityLog(ActivityLog $activityLog): static
+    {
+        if (!$this->activityLogs->contains($activityLog)) {
+            $this->activityLogs->add($activityLog);
+            $activityLog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivityLog(ActivityLog $activityLog): static
+    {
+        if ($this->activityLogs->removeElement($activityLog)) {
+            // set the owning side to null (unless already changed)
+            if ($activityLog->getUser() === $this) {
+                $activityLog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function logActivity(string $activity)
+    {
+        $activityLog = new ActivityLog();
+        $activityLog->setUser($this);
+        $activityLog->setActivity($activity);
+        $activityLog->setCreatedAt(new \DateTimeImmutable());
+
+        $this->addActivityLog($activityLog);
     }
 }

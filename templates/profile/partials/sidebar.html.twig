@@ -6,6 +6,9 @@
 			<span>
 				<a href="{{path('app_edit_profile')}}">{{app.user.username ?? " "}}</a>
 			</span>
+			<span>
+				<a href="{{path('app_edit_profile')}}">{{app.user.status ?? " "}}</a>
+			</span>
 		</h3>
 	</div>
 	<div class="dashboard-menu">
@@ -28,7 +31,7 @@
 			</li>
 
 			<li>
-				<a href="messages.html">
+				<a href="{{path('app_messages')}}" {% if app.request.attributes.get('_route') == 'app_messages' %} class="active" {% endif %}">
 					<i class="lni lni-envelope"></i>
 					Messages</a>
 			</li>

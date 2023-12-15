@@ -8,11 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConversationsController extends AbstractController
 {
-    #[Route('/messages', name: 'app_conversations')]
+    #[Route('/messages', name: 'app_messages')]
     public function index(): Response
     {
-        return $this->render('conversations/index.html.twig', [
-            'controller_name' => 'ConversationsController',
+        return $this->render('profile/messages.html.twig', [
+            // 'controller_name' => 'ConversationsController',
         ]);
     }
 }
