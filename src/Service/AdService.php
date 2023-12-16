@@ -74,7 +74,7 @@ class AdService
                 $this->em->persist($adImage);
             }
 
-            $activitylog = $ad->getUser()->getFullName().' Posted a new ad: '.$ad->getTitle().'at:'.$ad->getCreatedAt()->format('l dS F Y');
+            $activitylog = $ad->getUser()->getFullName().' Posted a new ad: '.$ad->getTitle().' at: '.$ad->getCreatedAt();
             $ad->getUser()->logActivity((string) $activitylog);
 
             $this->em->persist($ad);

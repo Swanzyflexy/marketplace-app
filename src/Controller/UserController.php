@@ -24,8 +24,16 @@ class UserController extends AbstractController
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(): Response
     {
+        $user = $this->getUser();
+        $activities = $user->getActivityLogs();
+        if ($user instanceof User) {
+            // Fetch ads belonging to the authenticated user
+            $ads = $user->getAds();
+        }
+
         return $this->render('profile/dashboard.html.twig', [
-            'controller_name' => 'UserController',
+            'ads' => $ads,
+            'activities' => $activities,
         ]);
     }
 

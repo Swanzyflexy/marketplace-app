@@ -9,7 +9,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-6 col-md-6 col-12">
 					<div class="breadcrumbs-content">
-						<h1 class="page-title">Ad Details</h1>
+						<h1 class="page-title">{{ad.title}}</h1>
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-6 col-12">
@@ -34,27 +34,24 @@
 						<div class="product-images">
 							<main id="gallery">
 								<div class="main-img">
-									<img src="assets/images/item-details/image1.jpg" id="current" alt="#">
+									<img src="{{asset(ad.adImages[0].adImagePath)}}" id="current" alt="{{ ad.adImages[0].adImageName }}">
 								</div>
 								<div class="images">
-									<img src="assets/images/item-details/image1.jpg" class="img" alt="#">
-									<img src="assets/images/item-details/image2.jpg" class="img" alt="#">
-									<img src="assets/images/item-details/image3.jpg" class="img" alt="#">
-									<img src="assets/images/item-details/image4.jpg" class="img" alt="#">
-									<img src="assets/images/item-details/image5.jpg" class="img" alt="#">
+									{% for image in ad.adImages %}
+										<img src="{{asset(image.adImagePath)}}" class="img" alt="{{image.adImageName}}">
+									{% endfor %}
 								</div>
 							</main>
 						</div>
 					</div>
 					<div class="col-lg-6 col-md-12 col-12">
 						<div class="product-info">
-							<h2 class="title">MacBook Pro 13-inch</h2>
+							<h2 class="title">{{ad.title}}</h2>
 							<p class="location">
 								<i class="lni lni-map-marker"></i>
-								<a href="javascript:void(0)">New
-																	                                        York, USA</a>
+								<a href="javascript:void(0)">{{ad.adcity}}, {{ad.adstate}}, {{ad.adcountry}}</a>
 							</p>
-							<h3 class="price">$999</h3>
+							<h3 class="price">{{ad.price}}</h3>
 							<div class="list-info">
 								<h4>Informations</h4>
 								<ul>
@@ -71,8 +68,8 @@
 							</div>
 							<div class="contact-info">
 								<ul>
-									<li><a href="tel:+002562352589" class="call"><i class="lni lni-phone-set"></i>+00 256 235 2589<span>Call & Get more info</span></a></li>
-									<li><a href="mailto:example@gmail.com" class="mail"><i class="lni lni-envelope"></i></a></li>
+									<li><a href="tel:+002562352589" class="call"><i class="lni lni-phone-set"></i>{{ad.user.phone}}<span>Call & Get more info</span></a></li>
+									<li><a href="mailto:{{ad.user.email}}" class="mail"><i class="lni lni-envelope"></i></a></li>
 								</ul>
 							</div>
 							<div class="social-share">
@@ -96,23 +93,15 @@
 						<!-- Start Single Block -->
 						<div class="single-block description">
 							<h3>Description</h3>
-							<p>
-								There are many variations of passages of Lorem Ipsum available, but the majority
-															                                    have
-															                                    suffered alteration in some form, by injected humour, or randomised words which
-															                                    don't
-															                                    look even slightly believable.
-							</p>
-							<ul>
-								<li>Model: Apple MacBook Pro 13.3-Inch MYDA2</li>
-								<li>Apple M1 chip with 8-core CPU and 8-core GPU</li>
-								<li>8GB RAM</li>
-								<li>256GB SSD</li>
-								<li>13.3-inch 2560x1600 LED-backlit Retina Display</li>
-							</ul>
-							<p>The generated Lorem Ipsum is therefore always free from repetition, injected humour,
-															                                    or
-															                                    non-characteristic words etc.</p>
+							<p>{{ad.description}}</p>
+							{# <ul>
+																						<li>Model: Apple MacBook Pro 13.3-Inch MYDA2</li>
+																						<li>Apple M1 chip with 8-core CPU and 8-core GPU</li>
+																						<li>8GB RAM</li>
+																						<li>256GB SSD</li>
+																						<li>13.3-inch 2560x1600 LED-backlit Retina Display</li>
+																					</ul>
+																					<p>The generated Lorem Ipsum is therefore always free from repetition, injected humour,non-characteristic words etc.</p> #}
 						</div>
 						<!-- End Single Block -->
 						<!-- Start Single Block -->
@@ -137,10 +126,10 @@
 									<span>25 Feb, 2023</span>
 									<p>
 										There are many variations of passages of Lorem Ipsum available, but the
-																			                                            majority
-																			                                            have suffered alteration in some form, by injected humour, or randomised
-																			                                            words
-																			                                            which don't look even slightly believable.
+																																																											                                            majority
+																																																											                                            have suffered alteration in some form, by injected humour, or randomised
+																																																											                                            words
+																																																											                                            which don't look even slightly believable.
 									</p>
 									<a href="javascript:void(0)" class="reply">
 										<i class="lni lni-reply"></i>
@@ -185,10 +174,10 @@
 							class="item-details-sidebar">
 							<!-- Start Single Block -->
 							<div class="single-block author">
-								<h3>Author</h3>
+								<h3>Posted By</h3>
 								<div class="content">
 									<img src="assets/images/testimonial/testi3.jpg" alt="#">
-									<h4>Miliya Jessy</h4>
+									<h4>{{ad.user.fullname}}</h4>
 									<span>Member Since May 15,2023</span>
 									<a href="javascript:void(0)" class="see-all">See All Ads</a>
 								</div>
@@ -239,7 +228,7 @@
 											}
 										</style>
 										<a href="https://www.embedgooglemap.net">google map code for
-																					                                                website</a>
+																																																																	                                                website</a>
 										<style>
 											.gmap_canvas {
 												overflow: hidden;
@@ -289,21 +278,21 @@
 	</div>
 	<!-- End Newsletter Area -->
 	 <script type="text/javascript">
-	            const current = document.getElementById("current");
-	            const opacity = 0.6;
-	            const imgs = document.querySelectorAll(".img");
-	            imgs.forEach(img => {
-	                img.addEventListener("click", (e) => {
-	                    //reset opacity
-	                    imgs.forEach(img => {
-	                        img.style.opacity = 1;
-	                    });
-	                    current.src = e.target.src;
-	                    //adding class 
-	                    //current.classList.add("fade-in");
-	                    //opacity
-	                    e.target.style.opacity = opacity;
-	                });
-	            });
-	        </script>
+					            const current = document.getElementById("current");
+					            const opacity = 0.6;
+					            const imgs = document.querySelectorAll(".img");
+					            imgs.forEach(img => {
+					                img.addEventListener("click", (e) => {
+					                    //reset opacity
+					                    imgs.forEach(img => {
+					                        img.style.opacity = 1;
+					                    });
+					                    current.src = e.target.src;
+					                    //adding class 
+					                    //current.classList.add("fade-in");
+					                    //opacity
+					                    e.target.style.opacity = opacity;
+					                });
+					            });
+					        </script>
 {% endblock %}

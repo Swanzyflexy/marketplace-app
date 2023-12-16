@@ -16,7 +16,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-6 col-md-6 col-12">
 					<div class="breadcrumbs-content">
-						<h1 class="page-title">Welcome
+						<h1 class="page-title">Welcome, 
 							{{app.user.fullname }}</h1>
 					</div>
 				</div>
@@ -54,7 +54,7 @@
 											<i class="lni lni-checkmark-circle"></i>
 										</div>
 										<h3>
-											340
+											<span>{{ads|length}}</span>
 											<span>Total Ad Posted</span>
 										</h3>
 									</div>
@@ -100,67 +100,21 @@
 								<div class="activity-log dashboard-block">
 									<h3 class="block-title">My Activity Log</h3>
 									<ul>
-										<li>
-											<div class="log-icon">
-												<i class="lni lni-alarm"></i>
-											</div>
-											<a href="javascript:void(0)" class="title">Your Profile Updated!</a>
-											<span class="time">12 Minutes Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
-										<li>
-											<div class="log-icon">
-												<i class="lni lni-alarm"></i>
-											</div>
-											<a href="javascript:void(0)" class="title">You change your password</a>
-											<span class="time">59 Minutes Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
-										<li>
-											<div class="log-icon">
-												<i class="lni lni-alarm"></i>
-											</div>
-											<a href="javascript:void(0)" class="title">Your ads approved!</a>
-											<span class="time">5 Hours Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
-										<li>
-											<div class="log-icon">
-												<i class="lni lni-alarm"></i>
-											</div>
-											<a href="javascript:void(0)" class="title">You submit a new ads</a>
-											<span class="time">8 hours Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
-										<li>
-											<div class="log-icon">
-												<i class="lni lni-alarm"></i>
-											</div>
-											<a href="javascript:void(0)" class="title">You subscribe as a pro
-																																																																																																																																																																																																																																																																																																																																																			                                                    user!</a>
-											<span class="time">1 day Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
+										{% for activity in activities %}
+											<li>
+												<div class="log-icon">
+													<i class="lni lni-alarm"></i>
+												</div>
+												<a href="javascript:void(0)" class="title">{{activity.activity}}</a>
+												<span class="time">{{activity.getCreatedAt().format('l dS F Y') }}</span>
+												<span class="remove">
+													<a href="javascript:void(0)">
+														<i class="lni lni-close"></i>
+													</a>
+												</span>
+											</li>
+
+										{% endfor %}
 									</ul>
 								</div>
 								<!-- End Activity Log -->

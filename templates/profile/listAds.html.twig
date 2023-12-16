@@ -140,12 +140,12 @@
 														</a>
 													</li>
 													<li>
-														<a href="javascript:void(0)">
+														<a href="{{path('app_ad_show', {'id': ad.id})}}">
 															<i class="lni lni-eye"></i>
 														</a>
 													</li>
 													<li>
-														<a href="javascript:void(0)">
+														<a href="{{path('app_ad_delete', {'id': ad.id})}}">
 															<i class="lni lni-trash"></i>
 														</a>
 													</li>
@@ -157,25 +157,7 @@
 								{% endfor %}
 								<!-- Pagination -->
 								<div class="pagination left">
-									<ul class="pagination-list">
-										<li>
-											<a href="javascript:void(0)">1</a>
-										</li>
-										<li class="active">
-											<a href="javascript:void(0)">2</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)">3</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)">4</a>
-										</li>
-										<li>
-											<a href="javascript:void(0)">
-												<i class="lni lni-chevron-right"></i>
-											</a>
-										</li>
-									</ul>
+									{{ knp_pagination_render(ads) }}
 								</div>
 								<!--/ End Pagination -->
 							</div>

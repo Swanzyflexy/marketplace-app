@@ -100,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ActivityLog::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ActivityLog::class, cascade: ['persist'])]
     private Collection $activityLogs;
 
     public function __construct()

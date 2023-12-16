@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Repository\AdRepository;
 use App\Service\AdService;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -25,16 +26,27 @@ class AdController extends AbstractController
         private RequestStack $requestStack,
         private Client $httpClient,
         private TwigEnvironment $twig,
+        private PaginatorInterface $paginator
     ) {
     }
 
     #[Route('/myAds', name: 'app_ad_index', methods: ['GET'])]
-    public function index(AdRepository $adRepository): Response
+    public function index(AdRepository $adRepository, Request $request): Response
     {
         $user = $this->getUser();
         if ($user instanceof User) {
             // Fetch ads belonging to the authenticated user
-            $ads = $adRepository->findBy(['user' => $user]);
+            $adsQuery = $adRepository->createQueryBuilder('a')
+            ->where('a.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+            // Paginate the results
+            $ads = $this->paginator->paginate(
+                $adsQuery, // Query to paginate
+                $request->query->getInt('page', 1), // Current page number, default is 1
+                10 // Number of items per page
+            );
         }
 
         return $this->render('profile/listAds.html.twig', [
