@@ -37,14 +37,15 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-profile', name: 'app_edit_profile', methods: ['GET', 'POST'])]
+    // TODO make this work and add redirect to login page after delete
+    #[Route('/{id}/edit-profile', name: 'app_edit_profile', methods: ['GET', 'POST'])]
     public function profile(): Response
     {
         return $this->render('profile/profile-settings.html.twig', [
         ]);
     }
 
-    #[Route('{id}/delete', name: 'app_user_delete', methods: ['GET', 'POST'])]
+    #[Route('/{id}/delete', name: 'app_user_delete', methods: ['GET', 'POST'])]
     public function delete(Request $request, User $user): Response
     {
         if ($request->isMethod('POST')) {
@@ -56,7 +57,7 @@ class UserController extends AbstractController
                 $this->em->flush();
             }
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('profile/delete-account.html.twig');

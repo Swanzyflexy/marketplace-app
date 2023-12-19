@@ -55,22 +55,22 @@
 								<ul>
 									<li class="active">
 										<a href="javascript:void(0)">All Ads
-											<span>{{ads|length}}</span>
+											<span>{{app.user.getAds()|length}}</span>
 										</a>
 									</li>
 									<li>
-										<a href="javascript:void(0)">Published
+										<a href="javascript:void(0)">Pending Ads
 											<span>88</span>
-										</a>
-									</li>
-									<li>
-										<a href="javascript:void(0)">Sold
-											<span>02</span>
 										</a>
 									</li>
 									<li>
 										<a href="javascript:void(0)">Active
 											<span>45</span>
+										</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">Sold
+											<span>02</span>
 										</a>
 									</li>
 									<li>
@@ -104,61 +104,65 @@
 									</div>
 								</div>
 								<!-- End List Title -->
-								{% for ad in ads %}
-									<!-- Start Single List -->
-									<div class="single-item-list">
-										<div class="row align-items-center">
-											<div class="col-lg-4 col-md-4 col-12">
-												<div class="item-image">
-													<img src="{{asset('assets/images/my-items/my-item1.png')}}" alt="{{ad.id}}">
-													<div class="content">
-														<h3 class="title">
-															<a href="javascript:void(0)">{{ad.title}}</a>
-														</h3>
-														<span class="price">{{ad.price}}</span>
+								<div>
+									{% for ad in ads %}
+										<!-- Start Single List -->
+										<div class="single-item-list">
+											<div class="row align-items-center">
+												<div class="col-lg-4 col-md-4 col-12">
+													<div class="item-image">
+														<img src="{{asset(ad.adImages[0].adImagePath)}}" alt="{{ad.id}}">
+														<div class="content">
+															<h3 class="title">
+																<a href="{{path('app_ad_show', {'id': ad.id})}}">{{ad.title}}</a>
+															</h3>
+															<span class="price">{{ad.price}}</span>
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="col-lg-2 col-md-2 col-12">
-												<p>
-													<a href="javascript:void(0)">{{ad.category.parentCategory.name}}</a>
-													>
-													<a href="javascript:void(0)">{{ad.category.name}}</a>
-												</p>
-											</div>
-											<div class="col-lg-2 col-md-2 col-12">
-												<p>New</p>
-											</div>
-											<div class="col-lg-2 col-md-2 col-12 {% if ad.status != 'Active' %}bg-warning{% endif %}">
-												<p class="text-black">{{ad.status}}</p>
-											</div>
-											<div class="col-lg-2 col-md-3 col-12 align-right">
-												<ul class="action-btn">
-													<li>
-														<a href="{{path('app_ad_edit', {'id': ad.id})}}">
-															<i class="lni lni-pencil"></i>
-														</a>
-													</li>
-													<li>
-														<a href="{{path('app_ad_show', {'id': ad.id})}}">
-															<i class="lni lni-eye"></i>
-														</a>
-													</li>
-													<li>
-														<a href="{{path('app_ad_delete', {'id': ad.id})}}">
-															<i class="lni lni-trash"></i>
-														</a>
-													</li>
-												</ul>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p>
+														<a href="javascript:void(0)">{{ad.category.parentCategory.name}}</a>
+														>
+														<a href="{{path('app_ad_show', {'id': ad.id})}}">{{ad.category.name}}</a>
+													</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12">
+													<p>New</p>
+												</div>
+												<div class="col-lg-2 col-md-2 col-12 {% if ad.status != 'Active' %}bg-warning{% endif %} rounded-pill border border-dark">
+													<p class="text-black">{{ad.status}}</p>
+												</div>
+												<div class="col-lg-2 col-md-3 col-12 align-right">
+													<ul class="action-btn">
+														<li>
+															<a href="{{path('app_ad_edit', {'id': ad.id})}}">
+																<i class="lni lni-pencil"></i>
+															</a>
+														</li>
+														<li>
+															<a href="{{path('app_ad_show', {'id': ad.id})}}">
+																<i class="lni lni-eye"></i>
+															</a>
+														</li>
+														<li>
+															<a href="{{path('app_ad_delete', {'id': ad.id})}}">
+																<i class="lni lni-trash"></i>
+															</a>
+														</li>
+													</ul>
+												</div>
 											</div>
 										</div>
-									</div>
-									<!-- End Single List -->
-								{% endfor %}
-								<!-- Pagination -->
-								<div class="pagination left">
-									{{ knp_pagination_render(ads) }}
+										<!-- End Single List -->
+									{% endfor %}
 								</div>
+								<!-- Pagination -->
+								<span class="pagination-left">
+									<ul class="pagination-list">
+										{{ knp_pagination_render(ads) }}
+									</ul>
+								</span>
 								<!--/ End Pagination -->
 							</div>
 							<!-- End Items Area -->

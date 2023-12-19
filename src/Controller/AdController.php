@@ -45,7 +45,7 @@ class AdController extends AbstractController
             $ads = $this->paginator->paginate(
                 $adsQuery, // Query to paginate
                 $request->query->getInt('page', 1), // Current page number, default is 1
-                10 // Number of items per page
+                5 // Number of items per page
             );
         }
 
@@ -103,7 +103,7 @@ class AdController extends AbstractController
                 // Handle other types of errors, e.g., file upload error
                 $this->addFlash('error', 'An error occurred while creating the ad.');
 
-                return $this->redirectToRoute('your_error_route');
+                return $this->redirectToRoute('app_ad_new');
             }
         }
 
@@ -112,7 +112,8 @@ class AdController extends AbstractController
             // 'adImages' => $ad->getAdImages(),
             'categories' => $categories,
             '_validation_errors' => $request->request->get('_validation_errors'),
-        ]);
+            '_old_values' => $request->request->all(),
+         ]);
     }
 
     #[Route('/{id}/view-ad', name: 'app_ad_show', methods: ['GET'])]
@@ -123,19 +124,48 @@ class AdController extends AbstractController
         ]);
     }
 
+    // TODO: Update this route to submit edit request
     #[Route('/{id}/edit', name: 'app_ad_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ad $ad): Response
     {
         $categories = $this->em->getRepository(AdCategory::class)
             ->findBy(['parentCategory' => null]);
 
-        return $this->render('profile/addnewlisting.html.twig', [
+        // TODO: get ad by id
+
+        if ($request->isMethod('POST')) {
+            $adCategory = $this->em->getRepository(AdCategory::class)->find($request->request->get('category'));
+
+            // Handle file uploads
+            $uploadedImages = $request->files->get('ad_images');
+
+            // Call the AdService to handle the edit logic, passing $ad instance
+            $result = $this->adService->editAd($ad, $request->request->all(), $uploadedImages, $adCategory);
+
+            if ($result instanceof Ad) {
+                // Edit successful, redirect or show success message
+                $this->addFlash('success', 'Ad updated successfully.');
+
+                return $this->redirectToRoute('app_ad_show', ['id' => $ad->getId()]);
+            } elseif (is_array($result)) {
+                // Validation errors, render the form with errors
+                return $this->render('profile/addnewlisting.html.twig', [
+                    'ad' => $ad,
+                    'categories' => $categories,
+                    '_validation_errors' => $result,
+                ]);
+            }
+            // Handle other error cases if needed
+        }
+
+        // Render the edit form
+        return $this->render('profile/editlisting.html.twig', [
             'ad' => $ad,
             'categories' => $categories,
-            '_validation_errors' => $request->request->get('_validation_errors'),
         ]);
     }
 
+    // TODO Make this delete function work, add confirmation message
     #[Route('/{id}', name: 'app_ad_delete', methods: ['POST'])]
     public function delete(Request $request, Ad $ad, EntityManagerInterface $entityManager): Response
     {

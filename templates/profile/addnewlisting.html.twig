@@ -156,7 +156,7 @@
 														<div class="col-lg-4 col-12">
 															<div class="form-group">
 																<label>Item Price*</label>
-																<input name="price" type="text" placeholder="Enter Price">
+																<input name="price" type="text" placeholder="Enter Price" value="{{ad.price ?? '' }}">
 																{% if _validation_errors.price is defined %}
 																	<div class="error">{{ _validation_errors.price }}</div>
 																{% endif %}
@@ -314,7 +314,7 @@
 																	<select class="user-chosen-select" name="country" id="country">
 																		<option value="">Select a Country</option>
 																		{% for country in countries() %}
-																			<option value="{{ country.code }}">{{ country.name }}</option>
+																			<option value="{{ country.code }} - {{ country.name }}">{{ country.name }}</option>
 																		{% endfor %}
 																	</select>
 																</div>
@@ -406,108 +406,108 @@
 	</div>
 	<!-- End Newsletter Area -->
 	 <script>
-					const uploadContainer = document.getElementById('upload-input');
-					const fileInput = document.getElementById('upload');
-					const previewContainer = document.getElementById('preview-container');
-				
-				uploadContainer.addEventListener('click', () => fileInput.click());
-				uploadContainer.addEventListener('dragover', handleDragOver);
-				uploadContainer.addEventListener('drop', handleDrop);
-				fileInput.addEventListener('change', handleFileSelect);
-				
-				function handleDragOver(event) {
-				    event.preventDefault();
-				    uploadContainer.classList.add('border-primary');
-				}
-				
-				function handleDrop(event) {
-				    event.preventDefault();
-				    uploadContainer.classList.remove('border-primary');
-				
-				    const files = event.dataTransfer.files;
-				    handleFiles(files);
-				}
-				
-				function handleFileSelect(event) {
-				    const files = event.target.files;
-				    handleFiles(files);
-				}
-				
-				function handleFiles(files) {
-				    for (const file of files) {
-				        const reader = new FileReader();
-				
-				        reader.onload = function (e) {
-				            const previewItem = document.createElement('div');
-				            previewItem.className = 'preview-item';
-				
-				            const previewImage = document.createElement('img');
-				            previewImage.src = e.target.result;
-				            previewImage.alt = file.name;
-				            previewImage.className = 'preview-image';
-				
-				            const cancelButton = document.createElement('button');
-				            cancelButton.innerText = 'X';
-				            cancelButton.className = 'cancel-button';
-				            cancelButton.addEventListener('click', () => removePreview(previewItem));
-				
-				            previewItem.appendChild(previewImage);
-				            previewItem.appendChild(cancelButton);
-				
-				            previewContainer.appendChild(previewItem);
-				        };
-				
-				        reader.readAsDataURL(file);
-				    }
-				}
-				
-				function removePreview(previewItem) {
-				    previewContainer.removeChild(previewItem);
-				}
-				
-				const form = document.getElementById('wizardForm');
-				const tabs = document.querySelectorAll('.tab-pane');
-				const tabLinks = document.querySelectorAll('.tab-link');
-				const prevBtn = document.getElementById('prevBtn');
-				const nextBtn = document.getElementById('nextBtn');
-				const submitBtn = document.getElementById('submitBtn');
-				let currentTab = 0;
-				
-				function showTab(index) {
-				    tabs.forEach((tab, i) => {
-				        tab.classList.remove('show', 'active');
-				        if (i === index) {
-				            tab.classList.add('show', 'active');
-				        }
-				    });
-				    tabLinks.forEach((link, i) => {
-				        link.classList.remove('active');
-				        if (i === index) {
-				            link.classList.add('active');
-				        }
-				    });
-				    updateButtons();
-				}
-				
-				function updateButtons() {
-				    currentTab === 0 ? prevBtn.classList.add('d-none') : prevBtn.classList.remove('d-none');
-				    currentTab === tabs.length - 1 ? nextBtn.classList.add('d-none') : nextBtn.classList.remove('d-none');
-				    currentTab === tabs.length - 1 ? submitBtn.classList.remove('d-none') : submitBtn.classList.add('d-none');
-				}
-				
-				function changeTab(n) {
-				    currentTab += n;
-				    showTab(currentTab);
-				}
-				
-				form.addEventListener('submit', function (e) {
-				    e.preventDefault();
-				    form.action = '/ad/new';
-				    form.submit();
-				    // Add your form submission logic here
-				    alert('Form submitted successfully!');
-				});
-				
-				showTab(currentTab);
-					</script>
+						const uploadContainer = document.getElementById('upload-input');
+						const fileInput = document.getElementById('upload');
+						const previewContainer = document.getElementById('preview-container');
+					
+					uploadContainer.addEventListener('click', () => fileInput.click());
+					uploadContainer.addEventListener('dragover', handleDragOver);
+					uploadContainer.addEventListener('drop', handleDrop);
+					fileInput.addEventListener('change', handleFileSelect);
+					
+					function handleDragOver(event) {
+					    event.preventDefault();
+					    uploadContainer.classList.add('border-primary');
+					}
+					
+					function handleDrop(event) {
+					    event.preventDefault();
+					    uploadContainer.classList.remove('border-primary');
+					
+					    const files = event.dataTransfer.files;
+					    handleFiles(files);
+					}
+					
+					function handleFileSelect(event) {
+					    const files = event.target.files;
+					    handleFiles(files);
+					}
+					
+					function handleFiles(files) {
+					    for (const file of files) {
+					        const reader = new FileReader();
+					
+					        reader.onload = function (e) {
+					            const previewItem = document.createElement('div');
+					            previewItem.className = 'preview-item';
+					
+					            const previewImage = document.createElement('img');
+					            previewImage.src = e.target.result;
+					            previewImage.alt = file.name;
+					            previewImage.className = 'preview-image';
+					
+					            const cancelButton = document.createElement('button');
+					            cancelButton.innerText = 'X';
+					            cancelButton.className = 'cancel-button';
+					            cancelButton.addEventListener('click', () => removePreview(previewItem));
+					
+					            previewItem.appendChild(previewImage);
+					            previewItem.appendChild(cancelButton);
+					
+					            previewContainer.appendChild(previewItem);
+					        };
+					
+					        reader.readAsDataURL(file);
+					    }
+					}
+					
+					function removePreview(previewItem) {
+					    previewContainer.removeChild(previewItem);
+					}
+					
+					const form = document.getElementById('wizardForm');
+					const tabs = document.querySelectorAll('.tab-pane');
+					const tabLinks = document.querySelectorAll('.tab-link');
+					const prevBtn = document.getElementById('prevBtn');
+					const nextBtn = document.getElementById('nextBtn');
+					const submitBtn = document.getElementById('submitBtn');
+					let currentTab = 0;
+					
+					function showTab(index) {
+					    tabs.forEach((tab, i) => {
+					        tab.classList.remove('show', 'active');
+					        if (i === index) {
+					            tab.classList.add('show', 'active');
+					        }
+					    });
+					    tabLinks.forEach((link, i) => {
+					        link.classList.remove('active');
+					        if (i === index) {
+					            link.classList.add('active');
+					        }
+					    });
+					    updateButtons();
+					}
+					
+					function updateButtons() {
+					    currentTab === 0 ? prevBtn.classList.add('d-none') : prevBtn.classList.remove('d-none');
+					    currentTab === tabs.length - 1 ? nextBtn.classList.add('d-none') : nextBtn.classList.remove('d-none');
+					    currentTab === tabs.length - 1 ? submitBtn.classList.remove('d-none') : submitBtn.classList.add('d-none');
+					}
+					
+					function changeTab(n) {
+					    currentTab += n;
+					    showTab(currentTab);
+					}
+					
+					form.addEventListener('submit', function (e) {
+					    e.preventDefault();
+					    form.action = '/ad/new';
+					    form.submit();
+					    // Add your form submission logic here
+					    alert('Form submitted successfully!');
+					});
+					
+					showTab(currentTab);
+						</script>
 {% endblock %}

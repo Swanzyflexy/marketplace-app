@@ -4,10 +4,10 @@
 		<img src="{{app.user.profileimage ?? " "}}" alt="#">
 		<h3>{{app.user.fullname ?? " "}}
 			<span>
-				<a href="{{path('app_edit_profile')}}">{{app.user.username ?? " "}}</a>
+				<a href="{{path('app_edit_profile', {'id': app.user.id})}}">{{app.user.username ?? " "}}</a>
 			</span>
 			<span>
-				<a href="{{path('app_edit_profile')}}">{{app.user.status ?? " "}}</a>
+				<a href="{{path('app_edit_profile', {'id': app.user.id})}}">{{app.user.status ?? " "}}</a>
 			</span>
 		</h3>
 	</div>
@@ -31,17 +31,20 @@
 			</li>
 
 			<li>
-				<a href="{{path('app_messages')}}" {% if app.request.attributes.get('_route') == 'app_messages' %} class="active" {% endif %}">
+				{# {{path('app_messages')}} #}
+				<a href="#" {% if app.request.attributes.get('_route') == 'app_messages' %} class="active" {% endif %} disabled>
 					<i class="lni lni-envelope"></i>
-					Messages</a>
+					Messages
+					<span class="text-danger small">(Coming Soon)</span>
+				</a>
 			</li>
+			{# <li>
+							<a href="invoice.html">
+								<i class="lni lni-printer"></i>
+								Sold Items</a>
+						</li> #}
 			<li>
-				<a href="invoice.html">
-					<i class="lni lni-printer"></i>
-					Sold Items</a>
-			</li>
-			<li>
-				<a href="{{ path('app_edit_profile') }}" {% if app.request.attributes.get('_route') == 'app_edit_profile' %} class="active" {% endif %}>
+				<a href="{{ path('app_edit_profile', {'id': app.user.id}) }}" {% if app.request.attributes.get('_route') == 'app_edit_profile' %} class="active" {% endif %}>
 					<i class="lni lni-pencil-alt"></i>
 					Edit Profile</a>
 			</li>

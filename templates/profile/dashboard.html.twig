@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% set sortedArray = app.user.getAds()|sort((a, b) => a.getCreatedAt() <=> b.getCreatedAt()) %}
 
 {% block title %}Hello!!
 	{% if app.user %}
@@ -16,7 +17,7 @@
 			<div class="row align-items-center">
 				<div class="col-lg-6 col-md-6 col-12">
 					<div class="breadcrumbs-content">
-						<h1 class="page-title">Welcome, 
+						<h1 class="page-title">Welcome,
 							{{app.user.fullname }}</h1>
 					</div>
 				</div>
@@ -47,21 +48,36 @@
 						<div class="details-lists">
 							<div class="row">
 								<div
-									class="col-lg-4 col-md-4 col-12">
+									class="col-lg-3 col-md-4 col-12">
 									<!-- Start Single List -->
 									<div class="single-list">
 										<div class="list-icon">
 											<i class="lni lni-checkmark-circle"></i>
 										</div>
 										<h3>
-											<span>{{ads|length}}</span>
-											<span>Total Ad Posted</span>
+											{{ads|length}}
+											<span>Total Ads</span>
 										</h3>
 									</div>
 									<!-- End Single List -->
 								</div>
 								<div
-									class="col-lg-4 col-md-4 col-12">
+									class="col-lg-3 col-md-4 col-12">
+									<!-- Start Single List -->
+									<div class="single-list three">
+										<div class="list-icon">
+											<i class="lni lni-emoji-speechless"></i>
+										</div>
+										<h3>
+											45
+											<span>Pending Ads
+											</span>
+										</h3>
+									</div>
+									<!-- End Single List -->
+								</div>
+								<div
+									class="col-lg-3 col-md-4 col-12">
 									<!-- Start Single List -->
 									<div class="single-list two">
 										<div class="list-icon">
@@ -76,7 +92,7 @@
 									<!-- End Single List -->
 								</div>
 								<div
-									class="col-lg-4 col-md-4 col-12">
+									class="col-lg-3 col-md-4 col-12">
 									<!-- Start Single List -->
 									<div class="single-list three">
 										<div class="list-icon">
@@ -100,79 +116,57 @@
 								<div class="activity-log dashboard-block">
 									<h3 class="block-title">My Activity Log</h3>
 									<ul>
-										{% for activity in activities %}
+										{% if activities is empty %}
 											<li>
-												<div class="log-icon">
-													<i class="lni lni-alarm"></i>
-												</div>
-												<a href="javascript:void(0)" class="title">{{activity.activity}}</a>
-												<span class="time">{{activity.getCreatedAt().format('l dS F Y') }}</span>
-												<span class="remove">
-													<a href="javascript:void(0)">
-														<i class="lni lni-close"></i>
-													</a>
-												</span>
+												<a class="title text-center">You have not done anything on this account</a>
 											</li>
-
-										{% endfor %}
-									</ul>
-								</div>
-								<!-- End Activity Log -->
+										{% else %}
+											{% for activity in activities|slice(-4)|sort((a, b) => b.getCreatedAt() <=> a.getCreatedAt()) %}
+												<li>
+													<div class="log-icon">
+														<i class="lni lni-alarm"></i>
+													</div>
+													<a href="javascript:void(0)" class="title">{{activity.activity}}</a>
+													<span class="time">{{activity.getCreatedAt().format('l dS F Y') }}</span>
+													<span class="remove">
+														<a href="javascript:void(0)">
+															<i class="lni lni-close"></i>
+														</a>
+													</span>
+												</li>
+											{% endfor %}
+										{% endif %}
+									</li>
+								</ul>
 							</div>
-							<div
-								class="col-lg-6 col-md-12 col-12">
-								<!-- Start Recent Items -->
-								<div class="recent-items dashboard-block">
-									<h3 class="block-title">Recent Ads</h3>
-									<ul>
+							<!-- End Activity Log -->
+						</div>
+						<div
+							class="col-lg-6 col-md-12 col-12">
+							<!-- Start Recent Items -->
+							<div class="recent-items dashboard-block">
+								<h3 class="block-title">Recent Ads</h3>
+								<ul>
+									{% if sortedArray is empty %}
 										<li>
-											<div class="image">
-												<a href="javascript:void(0)"><img src="{{asset('assets/images/dashboard/recent-items/item1.jpg')}}" alt="#"></a>
-											</div>
-											<a href="javascript:void(0)" class="title">iPhone 11 Pro Max</a>
-											<span class="time">12 Minutes Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
-										<li>
-											<div class="image">
-												<a href="javascript:void(0)"><img src="{{asset('assets/images/dashboard/recent-items/item2.jpg')}}" alt="#"></a>
-											</div>
-											<a href="javascript:void(0)" class="title">Polaris 600 Assault 144</a>
-											<span class="time">5 days Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
-										<li>
-											<div class="image">
-												<a href="javascript:void(0)"><img src="{{asset('assets/images/dashboard/recent-items/item3.jpg')}}" alt="#"></a>
-											</div>
-											<a href="javascript:void(0)" class="title">Brand New Bagpack</a>
-											<span class="time">1 week Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
-										<li>
-											<div class="image">
-												<a href="javascript:void(0)"><img src="{{asset('assets/images/dashboard/recent-items/item4.jpg')}}" alt="#"></a>
-											</div>
-											<a href="javascript:void(0)" class="title">Honda Civic VTi 2023</a>
-											<span class="time">3 week Ago</span>
-											<span class="remove">
-												<a href="javascript:void(0)">
-													<i class="lni lni-close"></i>
-												</a>
-											</span>
-										</li>
+											<a class="title text-center">You have not posted any Ad(s) yet!!!</li>
+										{% else %}
+											{% for ad in sortedArray|slice(-4)|sort((a, b) => b.getCreatedAt() <=> a.getCreatedAt()) %}
+												<li>
+													<div class="image">
+														<a href="{{path('app_ad_show', {'id': ad.id})}}"><img src="{{asset(ad.adImages[0].adImagePath)}}" alt="#"></a>
+													</div>
+													<a href="{{path('app_ad_show', {'id': ad.id})}}" class="title">{{ ad.title }}</a>
+													<span class="time">{{ ad.getCreatedAt().format('l dS F Y')}}</span>
+													<span class="remove">
+														<a href="javascript:void(0)">
+															<i class="lni lni-close"></i>
+														</a>
+													</span>
+												</li>
+												{# Adjust 'someProperty' to the actual property you want to display #}
+											{% endfor %}
+										{% endif %}
 									</ul>
 								</div>
 								<!-- End Recent Items -->
@@ -213,39 +207,9 @@
 		</div>
 	</div>
 	<!-- End Newsletter Area -->
+
 {% endblock %}
-{# {% else %}
-	{% block body %}
-		<style>
-			.example-wrapper {
-				margin: 1em auto;
-				max-width: 800px;
-				width: 95%;
-				font: 18px / 1.5 sans-serif;
-			}
-			.example-wrapper code {
-				background: #F5F5F5;
-				padding: 2px 6px;
-			}
-		</style>
 
-		<div class="example-wrapper">
-			<h1>Hello
-				{{ controller_name }}! ✅</h1>
-
-			This friendly message is coming from:
-			<ul>
-				<li>Your controller at
-					<code>
-						<a href="{{ '/var/www/ikoleproj.lcl/simpleMarketPlaceApp/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a>
-					</code>
-				</li>
-				<li>Your template at
-					<code>
-						<a href="{{ '/var/www/ikoleproj.lcl/simpleMarketPlaceApp/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a>
-					</code>
-				</li>
-			</ul>
-		</div>
-	{% endblock %}
-{% endif %} #}
+{# {% block javascripts %}
+									{{ parent() }}
+								{% endblock %} #}

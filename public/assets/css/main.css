@@ -1128,7 +1128,6 @@ ol {
 .pagination {
   text-align: left;
   margin: 30px 0 0 0;
-  display: block;
 }
 
 .pagination.center {
@@ -1186,6 +1185,27 @@ ol {
 .blog-grids.pagination {
   margin-top: 50px;
   text-align: center;
+}
+
+.pagination {
+  border: 1px solid #5830E0;
+  border-radius: 4px;
+}
+
+.pagination span {
+  padding: 6px 14px;
+  font-size: small;
+  border-left: 1px solid #5830E0;
+  font-weight: 600;
+}
+
+.pagination span a {
+  color: #888;
+}
+
+span.current {
+  background-color: #5830E0;
+  color: #fff !important;
 }
 
 .button .btn {
@@ -4867,6 +4887,7 @@ blockquote .shape {
   height: 60px;
   width: 60px;
   border-radius: 3px;
+  object-fit:contain;
 }
 
 .dashboard .main-content .recent-items ul li:hover {
@@ -5485,6 +5506,7 @@ blockquote .shape {
   height: 60px;
   width: 60px;
   border-radius: 3px;
+  object-fit: contain;
 }
 
 .my-items .single-item-list .item-image .title a {
@@ -5505,8 +5527,10 @@ blockquote .shape {
 }
 
 .my-items .single-item-list p {
-  color: #888;
+  color: #111;
   font-family: 'Jost', sans-serif;
+  text-align: center;
+  border-radius: 3px;
 }
 
 .my-items .single-item-list .action-btn li {
@@ -6230,9 +6254,15 @@ blockquote .shape {
   border-radius: 6px;
 }
 
+.item-details .product-images .main-img {
+  height: 50%;
+}
+
 .item-details .product-images img {
-  width: 100%;
+  width: 80%;
   cursor: pointer;
+  text-align: center;
+  object-fit: contain;
 }
 
 .item-details .product-images .images {
