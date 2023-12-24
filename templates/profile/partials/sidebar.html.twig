@@ -13,6 +13,13 @@
 	</div>
 	<div class="dashboard-menu">
 		<ul>
+			{% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+				<li>
+					<a href="{{ path('app_master_admin') }}" {% if app.request.attributes.get('_route') == 'app_master_admin' %} class="active" {% endif %}>
+						<i class="lni lni-key"></i>
+						Master Admin</a>
+				</li>
+			{% endif %}
 			<li>
 				<a href="{{ path('app_dashboard') }}" {% if app.request.attributes.get('_route') == 'app_dashboard' %} class="active" {% endif %}>
 					<i class="lni lni-dashboard"></i>
@@ -39,10 +46,10 @@
 				</a>
 			</li>
 			{# <li>
-							<a href="invoice.html">
-								<i class="lni lni-printer"></i>
-								Sold Items</a>
-						</li> #}
+																<a href="invoice.html">
+																	<i class="lni lni-printer"></i>
+																	Sold Items</a>
+															</li> #}
 			<li>
 				<a href="{{ path('app_edit_profile', {'id': app.user.id}) }}" {% if app.request.attributes.get('_route') == 'app_edit_profile' %} class="active" {% endif %}>
 					<i class="lni lni-pencil-alt"></i>

@@ -12,7 +12,7 @@ class ConversationsController extends AbstractController
     public function index(): Response
     {
         return $this->render('profile/messages.html.twig', [
-            // 'controller_name' => 'ConversationsController',
+            'controller_name' => 'FEATURE IS BEING WORKED ON',
         ]);
     }
 }

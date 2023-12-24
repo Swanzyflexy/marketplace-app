@@ -37,6 +37,7 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
     public function register(Request $request): Response
     {
+        // dd($this->getParameter('kernel.project_dir'));
         // Parse JSON data from the request body
         $user = new User();
 
@@ -53,13 +54,14 @@ class RegistrationController extends AbstractController
             $user->setCountry($request->request->get('country'));
             $user->setPassword($this->passwordHasher->hashPassword(
                 $user,
-                $request->request->get('plainPassword')
+                $request->request->get('password')
             ));
             // You may adjust the default roles as needed
             $user->setStatus('Inactive');
             $user->setRoles(['ROLE_USER']);
             $user->setIsVerified(false);
             $user->setCreatedAt();
+            $user->setUpdatedAt();
             $profileImage = $request->files->get('profile_image');
 
             if ($profileImage instanceof UploadedFile) {
@@ -109,7 +111,7 @@ class RegistrationController extends AbstractController
             ]);
             }
 
-            $activitylog = $user->getFullName().' Created an Account '.$user->getUsername().'at:'.$user->getCreatedAt()->format('l dS F Y');
+            $activitylog = $user->getFullName().' Created an Account '.$user->getUsername().' at:'.$user->getCreatedAt()->format('l dS F Y');
             $user->logActivity((string) $activitylog);
             $this->em->persist($user);
             $this->em->flush();
@@ -136,7 +138,7 @@ class RegistrationController extends AbstractController
             '_old_values' => $request->attributes->get('_old_values')]);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email', methods: ['POST'])]
+    #[Route('/verify/email', name: 'app_verify_email', methods: ['GET', 'POST'])]
     public function verifyUserEmail(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');

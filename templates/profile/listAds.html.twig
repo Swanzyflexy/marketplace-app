@@ -111,7 +111,12 @@
 											<div class="row align-items-center">
 												<div class="col-lg-4 col-md-4 col-12">
 													<div class="item-image">
-														<img src="{{asset(ad.adImages[0].adImagePath)}}" alt="{{ad.id}}">
+														{% if ad.adImages is not empty %}
+															<img src="{{asset(ad.adImages[0].adImagePath)}}" alt="{{ad.id}}">
+														{% else %}
+															<img src="https://static.vecteezy.com/system/resources/thumbnails/001/409/906/small_2x/man-shopping-in-e-commerce-marketplace-vector.jpg" alt="{{ad.id}}">
+														{% endif %}
+
 														<div class="content">
 															<h3 class="title">
 																<a href="{{path('app_ad_show', {'id': ad.id})}}">{{ad.title}}</a>
@@ -121,7 +126,7 @@
 													</div>
 												</div>
 												<div class="col-lg-2 col-md-2 col-12">
-													<p>
+													<p class="text-start">
 														<a href="javascript:void(0)">{{ad.category.parentCategory.name}}</a>
 														>
 														<a href="{{path('app_ad_show', {'id': ad.id})}}">{{ad.category.name}}</a>
@@ -130,9 +135,9 @@
 												<div class="col-lg-2 col-md-2 col-12">
 													<p>New</p>
 												</div>
-												<div class="col-lg-2 col-md-2 col-12 {% if ad.status != 'Active' %}bg-warning{% endif %} rounded-pill border border-dark">
-													<p class="text-black">{{ad.status}}</p>
-												</div>
+												<button class="col-lg-2 col-md-2 col-12 px-1 my-1 {% if ad.status == 'Approved' %}bg-success{% elseif ad.status=='Pending Approval' %}bg-warning{% elseif ad.status=='Rejected' %}bg-danger {% else %} bg-info {% endif %} rounded-pill border border-dark">
+													<span class="text-black">{{ad.status}}</span>
+												</button>
 												<div class="col-lg-2 col-md-3 col-12 align-right">
 													<ul class="action-btn">
 														<li>
@@ -146,9 +151,13 @@
 															</a>
 														</li>
 														<li>
-															<a href="{{path('app_ad_delete', {'id': ad.id})}}">
-																<i class="lni lni-trash"></i>
-															</a>
+															<form action="{{ path('app_ad_delete', {'id': ad.id}) }}" method="POST">
+																<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ad.id) }}">
+																<button type="submit" class="delete-btn">
+																	<i class="lni lni-trash"></i>
+																</button>
+															</form>
+
 														</li>
 													</ul>
 												</div>

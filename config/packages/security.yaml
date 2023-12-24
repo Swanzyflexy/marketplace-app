@@ -45,8 +45,9 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/profile, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
-        - { path: ^/ad/new, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
-        - { path: ^/ad/myAds, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
+        - { path: ^/ad, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER] }
+        - { path: ^/ad/*/updateStatus, roles: [IS_AUTHENTICATED_FULLY, ROLE_SUPER_ADMIN] }
+        - { path: ^/master, roles: [IS_AUTHENTICATED_FULLY, ROLE_SUPER_ADMIN] }
         - {
               path: ^/verify/email,
               roles: [IS_AUTHENTICATED_ANONYMOUSLY, ROLE_USER],

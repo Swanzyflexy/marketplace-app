@@ -75,7 +75,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $country = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Url(message: 'Profile image must be a valid URL')]
+    // #[Assert\Url(message: 'Profile image must be a valid URL')]
     private ?string $profile_image = null;
 
     #[ORM\Column]

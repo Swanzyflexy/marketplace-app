@@ -72,6 +72,7 @@ class AdController extends AbstractController
             ->findBy(['parentCategory' => null]);
 
         if ($request->isMethod('POST')) {
+            // dd($request->request->all(), $request->files->get('ad_images'));
             $adCategory = $this->em->getRepository(AdCategory::class)->find($request->request->get('category'));
             $adImagesData = $request->files->get('ad_images');
             $result = $this->adService->createAd(
@@ -108,7 +109,7 @@ class AdController extends AbstractController
         }
 
         return $this->render('profile/addnewlisting.html.twig', [
-            // 'ad' => $ad,
+            // 'ad' => $ad ?? '',
             // 'adImages' => $ad->getAdImages(),
             'categories' => $categories,
             '_validation_errors' => $request->request->get('_validation_errors'),
@@ -124,7 +125,6 @@ class AdController extends AbstractController
         ]);
     }
 
-    // TODO: Update this route to submit edit request
     #[Route('/{id}/edit', name: 'app_ad_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ad $ad): Response
     {
@@ -150,7 +150,7 @@ class AdController extends AbstractController
                 $request->attributes->set('_old_values', $request->request->all());
 
                 // Validation errors, render the form with errors
-                return $this->render('profile/addnewlisting.html.twig', [
+                return $this->render('profile/editlisting.html.twig', [
                     'ad' => $ad,
                     'categories' => $categories,
                     '_validation_errors' => $result,
@@ -160,23 +160,46 @@ class AdController extends AbstractController
         }
 
         // Render the edit form
-        return $this->render('profile/addnewlisting.html.twig', [
+        return $this->render('profile/editlisting.html.twig', [
             'ad' => $ad,
             'categories' => $categories,
             '_validation_errors' => $request->request->get('_validation_errors'),
-            '_old_values' => $request->request->all(),
         ]);
     }
 
+    #[Route('/{id}/updateStatus', name: 'app_ad_update_status', methods: ['POST'])]
+    public function updateAdStatus(Request $request, Ad $ad): Response
+    {
+        // dd($request->request->get('status'));
+        $result = $this->adService->updateAdStatus($ad, $request->request->get('status'));
+        if ($result instanceof Ad) {
+            $this->addFlash('success', 'Status updated successfully.');
+
+            return $this->redirectToRoute('app_master_admin', ['id' => $ad->getId()]);
+        } else {
+            $this->addFlash('error', 'An error occurred while updating the status.');
+
+            return $this->redirectToRoute('app_master_admin', ['id' => $ad->getId()]);
+        }
+    }
+
     // TODO Make this delete function work, add confirmation message
-    #[Route('/{id}', name: 'app_ad_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_ad_delete', methods: ['POST'])]
     public function delete(Request $request, Ad $ad, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ad->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($ad);
-            $entityManager->flush();
+            $result = $this->adService->deleteAd($ad);
+            if ($result instanceof Ad) {
+                $this->addFlash('success', 'Ad '.$ad->getTitle().' deleted successfully.');
+            }
         }
 
-        return $this->redirectToRoute('app_ad_index', [], Response::HTTP_SEE_OTHER);
+        $user = $this->getUser();
+
+        if ($user->getRoles() === 'ROLE_SUPER_ADMIN') {
+            return $this->redirectToRoute('app_master_admin');
+        }
+
+        return $this->redirectToRoute('app_ad_index');
     }
 }

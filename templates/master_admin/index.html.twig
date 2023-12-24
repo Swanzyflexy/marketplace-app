@@ -1,0 +1,437 @@
+{% extends 'base.html.twig' %}
+
+{# {% set sortedArray = ads|sort((a, b) => a.getCreatedAt() <=> b.getCreatedAt())  %} #}
+{% set totalAds = ads.getTotalItemCount %}
+{% set totalUsers = users.getTotalItemCount %}
+{% block title %}Hello!!
+	{% if app.user %}
+		{{app.user.username }}
+	{% else %}
+		UserController!
+	{% endif %}
+	| SimpleMarketPlaceApp
+{% endblock %}
+{# {% if app.user %} #}
+{% block body %}
+	<!-- Start Breadcrumbs -->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="breadcrumbs-content">
+						<h1 class="page-title">Welcome,
+							{{app.user.fullname }}</h1>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-12">
+					<ul class="breadcrumb-nav">
+						<li>
+							<a href="index.html">Home</a>
+						</li>
+						<li>Dashboard</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Breadcrumbs -->
+	{{ include('components/alerts.html.twig') }}
+	<!-- Start Dashboard Section -->
+	<section class="dashboard section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-12">
+					{{ include('profile/partials/sidebar.html.twig') }}
+				</div>
+				<div class="col-lg-9 col-md-8 col-12">
+					<div
+						class="main-content">
+						<!-- Start Details Lists -->
+						<div class="details-lists">
+							<div class="row">
+								<div
+									class="col-lg-3 col-md-4 col-12">
+									<!-- Start Single List -->
+									<div class="single-list">
+										<div class="list-icon">
+											<i class="lni lni-checkmark-circle"></i>
+										</div>
+										<h3>
+											{{ totalAds }}
+											<span>Total Ads</span>
+										</h3>
+									</div>
+									<!-- End Single List -->
+								</div>
+								<div
+									class="col-lg-3 col-md-4 col-12">
+									<!-- Start Single List -->
+									<div class="single-list three">
+										<div class="list-icon">
+											<i class="lni lni-bolt"></i>
+										</div>
+										<h3>
+											45
+											<span>Active Ads
+											</span>
+										</h3>
+									</div>
+									<!-- End Single List -->
+								</div>
+								<div
+									class="col-lg-3 col-md-4 col-12">
+									<!-- Start Single List -->
+									<div class="single-list two">
+										<div class="list-icon">
+											<i class="lni lni-user"></i>
+										</div>
+										<h3>
+											{{totalUsers}}
+											<span>Total Users
+											</span>
+										</h3>
+									</div>
+									<!-- End Single List -->
+								</div>
+								<div
+									class="col-lg-3 col-md-4 col-12">
+									<!-- Start Single List -->
+									<div class="single-list three">
+										<div class="list-icon">
+											<i class="lni lni-emoji-happy"></i>
+										</div>
+										<h3>
+											45
+											<span>Active Users
+											</span>
+										</h3>
+									</div>
+									<!-- End Single List -->
+								</div>
+							</div>
+						</div>
+						<!-- End Details Lists -->
+						<div class="row">
+							<div class="col-md-12 col-12">
+								<div class="dashboard-block">
+									<h3 class="block-title">System Management</h3>
+									{# <div class="nav nav-tabs" id="nav-tab" role="tablist"> #}
+									<ul class="nav nav-pills justify-content-around" id="pills-tab" role="tablist">
+										<li class="nav-item" role="presentation">
+											<button class="nav-link active" id="nav-item-info-tab" data-bs-toggle="tab" data-bs-target="#nav-item-info" type="button" role="tab" aria-controls="nav-item-info" aria-selected="true">Ads Management</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="nav-item-details-tab" data-bs-toggle="tab" data-bs-target="#nav-item-details" type="button" role="tab" aria-controls="nav-item-details" aria-selected="false">User Management</button>
+										</li>
+										<li class="nav-item" role="presentation">
+											<button class="nav-link" id="nav-user-info-tab" data-bs-toggle="tab" data-bs-target="#nav-user-info" type="button" role="tab" aria-controls="nav-user-info" aria-selected="false">Logs View</button>
+										</li>
+									</ul>
+									<div class="tab-content" id="nav-tabContent">
+										<div class="tab-pane fade show active" id="nav-item-info" role="tabpanel" aria-labelledby="nav-item-info-tab">
+											<div class="row">
+												<div class="col-lg-12 col-md-12 col-12">
+													<div class="my-items dashboard-block py-3">
+														<h3 class="block-title">All Ads</h3>
+														<!-- Start Item List Title -->
+														<div class="item-list-title">
+															<div class="row align-items-center">
+																<div class="col-lg-4 col-md-4 col-12">
+																	<p>Ad Title</p>
+																</div>
+																<div class="col-lg-2 col-md-2 col-12">
+																	<p>Category</p>
+																</div>
+																<div class="col-lg-2 col-md-2 col-12">
+																	<p>Tags</p>
+																</div>
+																<div class="col-lg-2 col-md-2 col-12">
+																	<p>Status</p>
+																</div>
+																<div class="col-lg-2 col-md-2 col-12 align-right">
+																	<p>Action</p>
+																</div>
+															</div>
+														</div>
+														<!-- End List Title -->
+														<div class="item-list-box">
+															{% if activities is empty %}
+																<li>
+																	<a class="title text-center">You have not done anything on this account</a>
+																</li>
+															{% else %}
+																{% for ad in ads|slice(-10) %}
+																	<!-- Start Single List -->
+																	<div class="single-item-list">
+																		<div class="row align-items-center">
+																			<div class="col-lg-4 col-md-4 col-12">
+																				<div class="item-image">
+																					{% if ad.adImages is not empty %}
+																						<img src="{{asset(ad.adImages[0].adImagePath)}}" alt="{{ad.id}}">
+																					{% else %}
+																						<img src="https://static.vecteezy.com/system/resources/thumbnails/001/409/906/small_2x/man-shopping-in-e-commerce-marketplace-vector.jpg" alt="{{ad.id}}">
+																					{% endif %}
+
+																					<div class="content">
+																						<p class="text-start">
+																							Posted By:
+																							<a href="{{path('app_edit_profile', {'id': ad.user.id})}}">{{ad.user.fullname }}</a>
+																						</p>
+																						<p class="title text-bold text-start">
+																							Ad Title:
+																							<a href="{{path('app_ad_show', {'id': ad.id})}}">{{ad.title}}</a>
+																						</p>
+																						<span class="price text-dark fw-bold">
+																							Price:
+																							{{ ad.currency }}{{ad.price|number_format(2, '.', ',')}}
+																						</span>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col-lg-2 col-md-2 col-12">
+																				<p class="text-start">
+																					<a href="javascript:void(0)">{{ad.category.parentCategory.name}}</a>
+																					>
+																					<a href="{{path('app_ad_show', {'id': ad.id})}}">{{ad.category.name}}</a>
+																				</p>
+																			</div>
+																			<div class="col-lg-2 col-md-2 col-12">
+																				<p class="text-start">
+																					{% for tags in ad.tags %}
+																						{{tags.name}},
+																					{% endfor %}
+																				</p>
+																			</div>
+																			<div class="col-lg-2 col-md-2 col-12 text-center">
+																				<form action="{{ path('app_ad_update_status', {'id': ad.id}) }}" method="POST">
+																					<label class="my-1">Update User Status*</label>
+
+																					<div class="my-1">
+																						<div class="selector-head">
+																							<select class="user-chosen-select rounded-3" name="status" value="{{ad.status}}">
+																								<option value="">Select an option
+																								</option>
+																								<option value="Pending Approval">Pending Approval</option>
+																								<option value="Approved">Approved</option>
+																								<option value="Rejected">Rejected</option>
+																								<option value="Sold">Sold</option>
+																							</select>
+																						</div>
+																						<button class="w-100 px-1 my-1 {% if ad.status == 'Approved' %}bg-success{% elseif ad.status=='Pending Approval' %}bg-warning{% elseif ad.status=='Rejected' %}bg-danger {% else %} bg-info {% endif %} rounded-pill border border-dark" role="submit">
+																							<span class="text-black">{{ad.status}}</span>
+																						</button>
+																					</div>
+																				</form>
+																			</div>
+																			<div class="col-lg-2 col-md-3 col-12 align-right">
+																				<ul class="action-btn">
+																					<li>
+																						<a href="{{path('app_ad_edit', {'id': ad.id})}}">
+																							<i class="lni lni-pencil"></i>
+																						</a>
+																					</li>
+																					<li>
+																						<a href="{{path('app_ad_show', {'id': ad.id})}}">
+																							<i class="lni lni-eye"></i>
+																						</a>
+																					</li>
+																					<li>
+																						<form action="{{ path('app_ad_delete', {'id': ad.id}) }}" method="POST">
+																							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ad.id) }}">
+																							<button type="submit" class="delete-btn">
+																								<i class="lni lni-trash"></i>
+																							</button>
+																						</form>
+
+																					</li>
+																				</ul>
+																			</div>
+
+																		</div>
+																	</div>
+																	<!-- End Single List -->
+																{% endfor %}
+															{% endif %}
+														</div>
+														<!-- Pagination -->
+														<span class="pagination-left">
+															<ul class="pagination-list">
+																{{ knp_pagination_render(ads) }}
+															</ul>
+														</span>
+														<!--/ End Pagination -->
+													</div>
+												</div>
+											</div>
+										</div>
+										<!-- End My Items -->
+										<!-- Start Users Information -->
+										<div class="tab-pane fade" id="nav-item-details" role="tabpanel" aria-labelledby="nav-item-details-tab">
+											<div class="row">
+												<div class="col-md-12 col-12">
+													<div class="activity-log dashboard-block px-3">
+														<h3 class="block-title">Registered Users</h3>
+														<ul>
+															{% if users is empty %}
+																<li>
+																	<a class="title text-center">You have not done anything on this account</a>
+																</li>
+															{% else %}
+																{% for user in users|slice(-10) %}
+																	<li>
+																		<div class="log-icon">
+																			<i class="lni lni-alarm"></i>
+																		</div>
+																		<a href="javascript:void(0)" class="title">{{user.fullname }}</a>
+																		<span class="time">{{user.getCreatedAt().format('l dS F Y') }}</span>
+																		<span class="remove">
+																			<a href="javascript:void(0)">
+																				<i class="lni lni-close"></i>
+																			</a>
+																		</span>
+																	</li>
+																{% endfor %}
+															{% endif %}
+														</li>
+													</ul>
+													<!-- Pagination -->
+													<span class="pagination-left">
+														<ul class="pagination-list">
+															{{ knp_pagination_render(users) }}
+														</ul>
+													</span>
+													<!--/ End Pagination -->
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- End Users Information -->
+									<!-- Start Activity Log -->
+									<div class="tab-pane fade" id="nav-user-info" role="tabpanel" aria-labelledby="nav-user-info-tab">
+										<div class="row">
+											<div class="col-md-12 col-12">
+												<div class="activity-log dashboard-block">
+													<h3 class="block-title">User Activity Logs</h3>
+													<ul>
+														{% if activities is empty %}
+															<li>
+																<a class="title text-center">You have not done anything on this account</a>
+															</li>
+														{% else %}
+															{% for activity in activities|slice(-10) %}
+																<li>
+																	<div class="log-icon">
+																		<i class="lni lni-alarm"></i>
+																	</div>
+																	<a href="javascript:void(0)" class="title">{{activity.activity}}</a>
+																	<span class="time">{{activity.getCreatedAt().format('l dS F Y') }}</span>
+																	<span class="remove">
+																		<a href="javascript:void(0)">
+																			<i class="lni lni-close"></i>
+																		</a>
+																	</span>
+																</li>
+															{% endfor %}
+														{% endif %}
+													</li>
+												</ul>
+												<!-- Pagination -->
+												<span class="pagination-left px-4">
+													<ul class="pagination-list">
+														{{ knp_pagination_render(activities) }}
+													</ul>
+												</span>
+												<!--/ End Pagination -->
+											</div>
+										</div>
+									</div>
+									<!-- End Activity Log -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Dashboard Section -->
+<!-- Start Newsletter Area -->
+<div class="newsletter section">
+	<div class="container">
+		<div class="inner-content">
+			<div class="row align-items-center">
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="title">
+						<i class="lni lni-alarm"></i>
+						<h2>Newsletter</h2>
+						<p>We don't send spam so don't worry.</p>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="form">
+						<form action="#" method="get" target="_blank" class="newsletter-form">
+							<input name="EMAIL" placeholder="Your email address" type="email">
+							<div class="button">
+								<button class="btn">Subscribe<span class="dir-part"></span>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Newsletter Area -->
+ <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Retrieve the last active tab from local storage
+        const lastActiveTab = localStorage.getItem('lastActiveTab');
+
+        // Get all tab buttons and tab panes
+        const tabButtons = document.querySelectorAll('[data-bs-toggle="tab"]');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        // Determine the default active tab
+        const defaultActiveTab = document.querySelector('.nav-link.active');
+
+        // Function to activate a tab and its corresponding content
+        const activateTab = (tabId) => {
+            const tabButton = document.getElementById(tabId);
+            const tabPaneId = tabButton.getAttribute('data-bs-target').substring(1);
+            const tabPane = document.getElementById(tabPaneId);
+
+            // Remove 'active' class from all tab buttons and panes
+            tabButtons.forEach(button => button.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('show', 'active'));
+
+            // Add 'active' class to the clicked tab button and its corresponding pane
+            tabButton.classList.add('active');
+            tabPane.classList.add('show', 'active');
+        };
+
+        // Check if there is a last active tab and activate it, or activate the default tab
+        if (lastActiveTab) {
+            activateTab(lastActiveTab);
+        } else if (defaultActiveTab) {
+            defaultActiveTab.classList.add('active');
+            const defaultTabPaneId = defaultActiveTab.getAttribute('data-bs-target').substring(1);
+            const defaultTabPane = document.getElementById(defaultTabPaneId);
+            defaultTabPane.classList.add('show', 'active');
+        }
+
+        // Event listener for tab clicks
+        tabButtons.forEach(tabButton => {
+            tabButton.addEventListener('click', function () {
+                // Store the ID of the clicked tab in local storage
+                const clickedTabId = this.getAttribute('id');
+                localStorage.setItem('lastActiveTab', clickedTabId);
+                // Activate the clicked tab and its corresponding content
+                activateTab(clickedTabId);
+            });
+        });
+    });
+</script>{% endblock %}{# {% block javascripts %}
+																																																	{{ parent() }}
+																																																	{% endblock %} #}

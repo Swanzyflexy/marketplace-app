@@ -21,7 +21,7 @@ class UserController extends AbstractController
     ) {
     }
 
-    #[Route('/dashboard', name: 'app_dashboard')]
+    #[Route('/dashboard', name: 'app_dashboard', methods: ['GET'])]
     public function index(): Response
     {
         $user = $this->getUser();

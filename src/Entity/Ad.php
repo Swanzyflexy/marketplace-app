@@ -54,6 +54,17 @@ class Ad
     #[Assert\NotBlank(message: 'Ad country cannot be blank')]
     private ?string $ad_country = null;
 
+    #[ORM\ManyToOne(inversedBy: 'ads')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Category cannot be null')]
+    private ?AdCategory $category = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $currency = null;
+
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'ads')]
+    private Collection $tags;
+
     #[ORM\Column]
     #[Assert\NotNull(message: 'Created at cannot be null')]
     // #[Assert\DateTime(message: 'Created at must be a valid DateTime')]
@@ -63,14 +74,10 @@ class Ad
     // #[Assert\DateTime(message: 'Updated at must be a valid DateTime')]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ads')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Assert\NotNull(message: 'Category cannot be null')]
-    private ?AdCategory $category = null;
-
     public function __construct()
     {
         $this->adImages = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -238,6 +245,45 @@ class Ad
     public function setCategory(?AdCategory $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(string $currency): static
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): static
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): static
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeAd($this);
+        }
 
         return $this;
     }

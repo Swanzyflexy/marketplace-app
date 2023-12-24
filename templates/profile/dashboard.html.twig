@@ -102,6 +102,7 @@
 											45
 											<span>Expired Ads
 											</span>
+											{# <p class="small-text">Coming Soon</p> #}
 										</h3>
 									</div>
 									<!-- End Single List -->
@@ -154,7 +155,9 @@
 											{% for ad in sortedArray|slice(-4)|sort((a, b) => b.getCreatedAt() <=> a.getCreatedAt()) %}
 												<li>
 													<div class="image">
-														<a href="{{path('app_ad_show', {'id': ad.id})}}"><img src="{{asset(ad.adImages[0].adImagePath)}}" alt="#"></a>
+														{% if ad.adImages is not empty %}
+															<a href="{{path('app_ad_show', {'id': ad.id})}}"><img src="{{asset(ad.adImages[0].adImagePath)}}" alt="#"></a>
+														{% endif %}
 													</div>
 													<a href="{{path('app_ad_show', {'id': ad.id})}}" class="title">{{ ad.title }}</a>
 													<span class="time">{{ ad.getCreatedAt().format('l dS F Y')}}</span>

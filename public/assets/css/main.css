@@ -2644,6 +2644,7 @@ span.current {
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
   position: relative;
+  object-fit: contain;
 }
 
 .latest-news-area .single-news:hover .image::before {
@@ -4887,7 +4888,7 @@ blockquote .shape {
   height: 60px;
   width: 60px;
   border-radius: 3px;
-  object-fit:contain;
+  object-fit: contain;
 }
 
 .dashboard .main-content .recent-items ul li:hover {
@@ -4981,6 +4982,7 @@ blockquote .shape {
   position: absolute;
   left: 30px;
   top: 30px;
+  object-fit: contain;
 }
 
 .dashboard-sidebar .user-image h3 {
@@ -5094,6 +5096,7 @@ blockquote .shape {
   height: 150px;
   width: 150px;
   border-radius: 6px;
+  object-fit: contain;
 }
 
 .profile-settings-block .profile-setting-form {
@@ -5542,7 +5545,8 @@ blockquote .shape {
   margin: 0;
 }
 
-.my-items .single-item-list .action-btn li a {
+.my-items .single-item-list .action-btn li a,
+.delete-btn {
   height: 30px;
   width: 30px;
   line-height: 30px;
@@ -5553,7 +5557,8 @@ blockquote .shape {
   display: block;
 }
 
-.my-items .single-item-list .action-btn li a:hover {
+.my-items .single-item-list .action-btn li a:hover,
+.delete-btn:hover {
   color: #fff;
   background: #5830E0;
   border-color: transparent;
@@ -8011,6 +8016,10 @@ blockquote .shape {
 
   .dashboard-sidebar {
     margin-bottom: 30px;
+  }
+
+  p.small-text {
+    font-size: 6px;
   }
 
   .profile-settings-block .profile-setting-form .form-group {
