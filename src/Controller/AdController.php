@@ -131,8 +131,6 @@ class AdController extends AbstractController
         $categories = $this->em->getRepository(AdCategory::class)
             ->findBy(['parentCategory' => null]);
 
-        // TODO: get ad by id
-
         if ($request->isMethod('POST')) {
             $adCategory = $this->em->getRepository(AdCategory::class)->find($request->request->get('category'));
 
@@ -148,6 +146,9 @@ class AdController extends AbstractController
 
                 return $this->redirectToRoute('app_ad_show', ['id' => $ad->getId()]);
             } elseif (is_array($result)) {
+                $request->attributes->set('_validation_errors', $result);
+                $request->attributes->set('_old_values', $request->request->all());
+
                 // Validation errors, render the form with errors
                 return $this->render('profile/addnewlisting.html.twig', [
                     'ad' => $ad,
@@ -159,9 +160,11 @@ class AdController extends AbstractController
         }
 
         // Render the edit form
-        return $this->render('profile/editlisting.html.twig', [
+        return $this->render('profile/addnewlisting.html.twig', [
             'ad' => $ad,
             'categories' => $categories,
+            '_validation_errors' => $request->request->get('_validation_errors'),
+            '_old_values' => $request->request->all(),
         ]);
     }
 
