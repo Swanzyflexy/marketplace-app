@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
-
+{% set pendingAds = ads|filter(ad => ad.status == 'Pending Approval') %}
+{% set activeAds = ads|filter(ad => ad.status == 'Approved') %}
+{% set soldAds = ads|filter(ad => ad.status == 'Sold') %}
+{% set rejectedAds = ads|filter(ad => ad.status == 'Rejected') %}
 {% block title %}
 	{{app.user.fullname }}
 	| My Ads
@@ -55,27 +58,27 @@
 								<ul>
 									<li class="active">
 										<a href="javascript:void(0)">All Ads
-											<span>{{app.user.getAds()|length}}</span>
+											<span>{{ads.getTotalItemCount}}</span>
 										</a>
 									</li>
 									<li>
 										<a href="javascript:void(0)">Pending Ads
-											<span>88</span>
+											<span>{{pendingAds|length}}</span>
 										</a>
 									</li>
 									<li>
 										<a href="javascript:void(0)">Active
-											<span>45</span>
+											<span>{{activeAds|length }}</span>
 										</a>
 									</li>
 									<li>
 										<a href="javascript:void(0)">Sold
-											<span>02</span>
+											<span>{{soldAds|length}}</span>
 										</a>
 									</li>
 									<li>
 										<a href="javascript:void(0)">Expired
-											<span>55</span>
+											<span>{{rejectedAds|length }}</span>
 										</a>
 									</li>
 								</ul>

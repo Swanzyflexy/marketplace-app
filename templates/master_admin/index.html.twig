@@ -1,4 +1,9 @@
 {% extends 'base.html.twig' %}
+{% set pendingAds = ads|filter(ad => ad.status == 'Pending Approval') %}
+{% set activeAds = ads|filter(ad => ad.status == 'Approved') %}
+{% set soldAds = ads|filter(ad => ad.status == 'Sold') %}
+{% set rejectedAds = ads|filter(ad => ad.status == 'Rejected') %}
+{% set activeUsers = users|filter(user => user.status == 'active') %}
 
 {# {% set sortedArray = ads|sort((a, b) => a.getCreatedAt() <=> b.getCreatedAt())  %} #}
 {% set totalAds = ads.getTotalItemCount %}
@@ -71,7 +76,7 @@
 											<i class="lni lni-bolt"></i>
 										</div>
 										<h3>
-											45
+											{{activeAds|length}}
 											<span>Active Ads
 											</span>
 										</h3>
@@ -101,7 +106,7 @@
 											<i class="lni lni-emoji-happy"></i>
 										</div>
 										<h3>
-											45
+											{{activeUsers|length}}
 											<span>Active Users
 											</span>
 										</h3>
@@ -133,6 +138,35 @@
 												<div class="col-lg-12 col-md-12 col-12">
 													<div class="my-items dashboard-block py-3">
 														<h3 class="block-title">All Ads</h3>
+														<nav class="list-nav">
+															<ul>
+																<li class="active">
+																	<a href="javascript:void(0)">All Ads
+																		<span>{{ads.getTotalItemCount}}</span>
+																	</a>
+																</li>
+																<li>
+																	<a href="javascript:void(0)">Pending Ads
+																		<span>{{pendingAds|length}}</span>
+																	</a>
+																</li>
+																<li>
+																	<a href="javascript:void(0)">Active
+																		<span>{{activeAds|length }}</span>
+																	</a>
+																</li>
+																<li>
+																	<a href="javascript:void(0)">Sold
+																		<span>{{soldAds|length}}</span>
+																	</a>
+																</li>
+																<li>
+																	<a href="javascript:void(0)">Expired / Rejected
+																		<span>{{rejectedAds|length }}</span>
+																	</a>
+																</li>
+															</ul>
+														</nav>
 														<!-- Start Item List Title -->
 														<div class="item-list-title">
 															<div class="row align-items-center">
@@ -433,5 +467,5 @@
         });
     });
 </script>{% endblock %}{# {% block javascripts %}
-																																																	{{ parent() }}
-																																																	{% endblock %} #}
+																																																							{{ parent() }}
+																																																							{% endblock %} #}

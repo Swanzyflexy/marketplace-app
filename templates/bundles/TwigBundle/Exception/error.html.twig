@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Error !!!!!!!!!!!!!  - System Generated a
+	{{status_code }}
+	Error.
+{% endblock %}
+{% block body %}
+	{% if status_code == 403 %}
+		{% include 'error/403.html.twig' %}
+	{% else %}
+		<!-- Start Error Area -->
+		<div class="error-area">
+			<div class="d-table">
+				<div class="d-table-cell">
+					<div class="container">
+						<div class="error-content">
+							<h1>{{status_code}}</h1>
+							<h2>{{status_code}}
+								Error Contact Site Admin for more information</h2>
+							<p>What you're looking for is not Here</p>
+							<div class="button">
+								<a href="{{path('app_dashboard')}}" class="btn">Go To Home</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Error Area -->
+	{% endif %}
+{% endblock %}

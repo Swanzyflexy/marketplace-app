@@ -30,12 +30,13 @@
 					<i class="lni lni-circle-plus"></i>
 					Post An Ad</a>
 			</li>
-
-			<li>
-				<a href="{{path('app_ad_index')}}" {% if app.request.attributes.get('_route') == 'app_ad_index' %} class="active" {% endif %}>
-					<i class="lni lni-bolt-alt"></i>
-					My Ads</a>
-			</li>
+			{% if 'ROLE_SUPER_ADMIN' not in app.user.roles %}
+				<li>
+					<a href="{{path('app_ad_index')}}" {% if app.request.attributes.get('_route') == 'app_ad_index' %} class="active" {% endif %}>
+						<i class="lni lni-bolt-alt"></i>
+						My Ads</a>
+				</li>
+			{% endif %}
 
 			<li>
 				{# {{path('app_messages')}} #}
@@ -46,10 +47,10 @@
 				</a>
 			</li>
 			{# <li>
-																<a href="invoice.html">
-																	<i class="lni lni-printer"></i>
-																	Sold Items</a>
-															</li> #}
+																			<a href="invoice.html">
+																				<i class="lni lni-printer"></i>
+																				Sold Items</a>
+																		</li> #}
 			<li>
 				<a href="{{ path('app_edit_profile', {'id': app.user.id}) }}" {% if app.request.attributes.get('_route') == 'app_edit_profile' %} class="active" {% endif %}>
 					<i class="lni lni-pencil-alt"></i>

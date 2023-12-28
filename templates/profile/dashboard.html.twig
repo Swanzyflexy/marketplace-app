@@ -1,5 +1,10 @@
+-- Active: 1702144875279@@localhost@3306@marketplaceapp
 {% extends 'base.html.twig' %}
 {% set sortedArray = app.user.getAds()|sort((a, b) => a.getCreatedAt() <=> b.getCreatedAt()) %}
+{% set pendingAds = ads|filter(ad => ad.status == 'Pending Approval') %}
+{% set activeAds = ads|filter(ad => ad.status == 'Approved') %}
+{% set soldAds = ads|filter(ad => ad.status == 'Sold') %}
+{% set rejectedAds = ads|filter(ad => ad.status == 'Rejected') %}
 
 {% block title %}Hello!!
 	{% if app.user %}
@@ -69,7 +74,7 @@
 											<i class="lni lni-emoji-speechless"></i>
 										</div>
 										<h3>
-											45
+											{{pendingAds|length}}
 											<span>Pending Ads
 											</span>
 										</h3>
@@ -84,7 +89,7 @@
 											<i class="lni lni-bolt"></i>
 										</div>
 										<h3>
-											23
+											{{activeAds|length}}
 											<span>Active Ads
 											</span>
 										</h3>
@@ -99,7 +104,7 @@
 											<i class="lni lni-emoji-sad"></i>
 										</div>
 										<h3>
-											45
+											{{soldAds|length}}
 											<span>Expired Ads
 											</span>
 											{# <p class="small-text">Coming Soon</p> #}
@@ -210,9 +215,5 @@
 		</div>
 	</div>
 	<!-- End Newsletter Area -->
-
 {% endblock %}
 
-{# {% block javascripts %}
-									{{ parent() }}
-								{% endblock %} #}

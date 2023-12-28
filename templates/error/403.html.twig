@@ -1,0 +1,57 @@
+{# {% extends 'base.html.twig' %}
+{% block title %}
+	Error !!!!!!!!!!!!!  - System Generated and Error.
+{% endblock %} #}
+
+{% block body %}
+	<!-- Start Error Area -->
+	<div class="error-area">
+		<div class="d-table">
+			<div class="d-table-cell">
+				<div class="container">
+					<div class="error-content">
+						<h1>403</h1>
+						<h2>Access Denied</h2>
+						<p>You're not allowed on this page homie, stop sneaking around</p>
+						<div class="button">
+							<a href={{path('app_homepage')}} class="btn">Go To Home</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End Error Area -->
+{% endblock %}
+{# <body>
+	<!--[if lte IE 9]>
+	      <p class="browserUpgrade">
+	        You are using an <strong>outdated</strong> browser. Please
+	        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
+	        your experience and security.
+	      </p>
+	    <![endif]-->
+
+	<!-- Preloader -->
+		<div class="preloader"> <div class="preloader-inner">
+			<div class="preloader-icon">
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+	</div>
+	<!-- /End Preloader --> #}{# <!-- ========================= JS here ========================= -->
+		  <script src="assets/js/bootstrap.min.js"></script>
+ <script src="assets/js/wow.min.js"></script>
+ <script src="assets/js/tiny-slider.js"></script>
+ <script src="assets/js/glightbox.min.js"></script>
+ <script>
+	   window.onload = function () {
+	        window.setTimeout(fadeout, 500);
+	    }
+	
+	    function fadeout() {
+	        document.querySelector('.preloader').style.opacity = '0';
+	        document.querySelector('.preloader').style.display = 'none';
+	    }
+	  </script></body></html>#}
