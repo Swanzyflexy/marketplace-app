@@ -39,9 +39,10 @@ class UserController extends AbstractController
 
     // TODO make this work and add redirect to login page after delete
     #[Route('/{id}/edit-profile', name: 'app_edit_profile', methods: ['GET', 'POST'])]
-    public function profile(): Response
+    public function profile(Request $request, User $user): Response
     {
         return $this->render('profile/profile-settings.html.twig', [
+            'user' => $user,
         ]);
     }
 
