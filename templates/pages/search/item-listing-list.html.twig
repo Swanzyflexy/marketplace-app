@@ -69,9 +69,8 @@
 								{% endfor %}
 							</ul>
 						</div>
-
 						<!-- End Single Widget -->
-						<!-- Start Single Widget -->
+						{# <!-- Start Single Widget -->
 						<div class="single-widget range">
 							<h3>Price Range</h3>
 							<input type="range" class="form-range" name="range" step="1" min="100" max="10000" value="10" onchange="rangePrimary.value=value">
@@ -103,7 +102,7 @@
 								</label>
 							</div>
 						</div>
-						<!-- End Single Widget -->
+						<!-- End Single Widget --> #}
 						<!-- Start Single Widget -->
 						<div class="single-widget banner">
 							<h3>Advertisement</h3>
@@ -121,7 +120,7 @@
 								<div class="category-grid-topbar">
 									<div class="row align-items-center">
 										<div class="col-lg-6 col-md-6 col-12">
-											<h3 class="title">Showing 1-{{searchResults|length}}
+											<h3 class="title">Showing {{searchResults|length}}
 												of
 												{{searchResults|length}}
 												ads found</h3>

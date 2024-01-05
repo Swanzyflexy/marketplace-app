@@ -318,13 +318,21 @@
 																		</div>
 																		<a href="javascript:void(0)" class="title">{{user.fullname }}</a>
 																		<span class="time">{{user.getCreatedAt().format('l dS F Y') }}</span>
-																		<span class="remove">
-																			<a href="{{path('app_ad_edit', {'id': ad.id})}}">
+																		<span>
+																			<a href="{{path('app_edit_profile', {'id': user.id})}}">
 																				<i class="lni lni-pencil"></i>
 																			</a>
-																			<a href="javascript:void(0)">
-																				<i class="lni lni-close"></i>
-																			</a>
+																		</span>
+																		<span class="remove">
+																			<form action="{{path('app_user_delete', {'id': user.id})}}" method="POST">
+																				<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+																				<button type="submit" class="delete-btn">
+																					<i class="lni lni-close"></i>
+																				</button>
+																			</form>
+																			{# <a href="{{path('app_user_delete', {'id': user.id})}}">
+																																							<i class="lni lni-close"></i>
+																																						</a> #}
 																		</span>
 																	</li>
 																{% endfor %}
@@ -470,5 +478,5 @@
         });
     });
 </script>{% endblock %}{# {% block javascripts %}
-																																																								{{ parent() }}
-																																																								{% endblock %} #}
+																																																											{{ parent() }}
+																																																											{% endblock %} #}

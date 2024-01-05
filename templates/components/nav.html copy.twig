@@ -1,0 +1,63 @@
+<header class="header navbar-area">
+	<div class="container">
+		<div class="row align-items-center">
+			<div class="col-lg-12">
+				<div class="nav-inner">
+					<nav class="navbar navbar-expand-lg">
+						<a class="navbar-brand" href="/">
+							<img src="{{asset('assets/images/logo/logo.svg')}}" alt="Logo">
+						</a>
+						<button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="toggler-icon"></span>
+							<span class="toggler-icon"></span>
+							<span class="toggler-icon"></span>
+						</button>
+						<div class="collapse navbar-collapse sub-menu-bar " id="navbarSupportedContent">
+							<ul id="nav" class="navbar-nav ms-auto">
+								<li class="nav-item">
+									<a class=" active dd-menu collapsed" href="{{path('app_category_show', {'id': AdCategory.id})}}" data-bs-toggle="collapse" data-bs-target="#submenu-1-1" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Buy Electronics & Devices</a>
+								</li>
+								<li class="nav-item">
+									<a href="categories.html" aria-label="Toggle navigation">Rent an Apartment</a>
+								</li>
+								<li class="nav-item">
+									<a class=" dd-menu collapsed" href="{{path('app_category_show',{'id':AdCategory.id}) }}" data-bs-toggle="collapse" data-bs-target="#submenu-1-4" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Buy Furnitures</a>
+								</li>
+								<li class="nav-item">
+									<a class=" dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#submenu-1-5" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Buy a Car</a>
+								</li>
+							</ul>
+						</div>
+						<!-- navbar collapse -->
+						{% if app.user %}
+							<div class="login-button">
+								<ul class="text-end">
+									You are logged in as
+									{{ app.user.fullname }},
+									<br>
+									<a href="{{ path('app_dashboard') }}"><img src="{{ app.user.profileimage }}" alt="#" width="30">&nbsp;Dashboard</a>
+									|
+									<a href="{{ path('app_logout') }}">Logout</a>
+								</ul>
+							</div>
+						{% else %}
+							<div class="login-button">
+								<ul>
+									<li><a href="{{path('app_login')}}"><i class="lni lni-enter"></i>Login</a></li>
+									<li><a href="{{path('app_register')}}"><i class="lni lni-user"></i>Register</a></li>
+								</ul>
+							</div>
+						{% endif %}
+
+						<div class="button header-button">
+							<a href="{{path('app_ad_new')}}" class="btn">Post an Ad</a>
+						</div>
+					</nav>
+					<!-- navbar -->
+				</div>
+			</div>
+		</div>
+		<!-- row -->
+	</div>
+	<!-- container -->
+</header>

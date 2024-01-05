@@ -1,4 +1,4 @@
--- Active: 1702144875279@@localhost@3306@marketplaceapp
+{# -- Active: 1702144875279@@localhost@3306@marketplaceapp #}
 {% extends 'base.html.twig' %}
 {% set sortedArray = app.user.getAds()|sort((a, b) => a.getCreatedAt() <=> b.getCreatedAt()) %}
 {% set pendingAds = ads|filter(ad => ad.status == 'Pending Approval') %}

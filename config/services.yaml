@@ -23,16 +23,16 @@ services:
             - "../src/Kernel.php"
 
     App\Service\AdService:
-        autowire: true
+        # autowire: true
         # $flashBag: "@session.flash_bag"
-    App\Entity\AdCategory:
-        # $flashBag: "@session.flash_bag"
-    App\Entity\Ad:
-        # $flashBag: "@session.flash_bag"
-    App\Entity\User:
-        # $flashBag: "@session.flash_bag"
+    # App\Entity\AdCategory:
+    #     # $flashBag: "@session.flash_bag"
+    # # App\Entity\Ad:
+    # #     # $flashBag: "@session.flash_bag"
+    # # App\Entity\User:
+    # #     # $flashBag: "@session.flash_bag"
     App\Service\CountryService:
-        autowire: true
+        # autowire: true
 
     App\Twig\CountryExtension:
         arguments:
