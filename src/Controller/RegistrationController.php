@@ -163,4 +163,15 @@ class RegistrationController extends AbstractController
 
         return $this->redirectToRoute('app_dashboard');
     }
+
+    #[Route('/reset-password', name: 'app_pass_reset')]
+    public function resetPassword(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        
+        return $this->render('security/registration/reset_password.html.twig', [
+            'token' => $request->get('token'),
+            'email' => $request->get('email'),
+        ]);
+    }
 }

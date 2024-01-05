@@ -134,7 +134,7 @@
 							<!-- Start Single Grid -->
 							<div class="single-grid wow fadeInUp" data-wow-delay=".2s">
 								<div class="image">
-									<a href="item-details.html" class="thumbnail">
+									<a href="{{path('app_ad_show', {'id': ad.id})}}" class="thumbnail">
 										{% if ad.adImages|length > 0 %}
 											<img src="{{asset(ad.adImages[0].adImagePath) }}" alt="#" height="310px">
 										{% else %}

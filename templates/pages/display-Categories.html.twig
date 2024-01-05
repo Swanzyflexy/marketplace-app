@@ -66,42 +66,8 @@
 								{% endfor %}
 							</ul>
 						</div>
-						<!-- End Single Widget -->
-						{# <!-- Start Single Widget -->
-																		<div class="single-widget range">
-																			<h3>Price Range</h3>
-																			<input type="range" class="form-range" name="range" step="1" min="100" max="10000" value="10" onchange="rangePrimary.value=value">
-																			<div class="range-inner">
-																				<label>$</label>
-																				<input type="text" id="rangePrimary" placeholder="100"/>
-																			</div>
-																		</div>
-																		<!-- End Single Widget --> #}
-						{# <!-- Start Single Widget -->
-																								<div class="single-widget condition">
-																									<h3>Condition</h3>
-																									<div class="form-check">
-																										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
-																										<label class="form-check-label" for="flexCheckDefault1">
-																											All
-																										</label>
-																									</div>
-																									<div class="form-check">
-																										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
-																										<label class="form-check-label" for="flexCheckDefault2">
-																											New
-																										</label>
-																									</div>
-																									<div class="form-check">
-																										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
-																										<label class="form-check-label" for="flexCheckDefault3">
-																											Used
-																										</label>
-																									</div>
-																								</div>
-																								<!-- End Single Widget --> #}
-						<!-- Start Single Widget -->
-							<div class="single-widget banner"> <h3>Advertisement</h3>
+						<div class="single-widget banner">
+							<h3>Advertisement</h3>
 							<a href="javascript:void(0)">
 								<img src="assets/images/banner/banner.jpg" alt="#">
 							</a>
@@ -198,14 +164,13 @@
 										</div>
 										<div class="row">
 											<div
-												class="col-12">
-												{# <!-- Pagination -->
-												<span class="pagination-left">
-													<ul class="pagination-list">
-														{{ knp_pagination_render(ads) }}
-													</ul>
-												</span>
-												<!--/ End Pagination --> #}
+												class="col-12">{# <!-- Pagination -->
+																									<span class="pagination-left">
+																										<ul class="pagination-list">
+																											{{ knp_pagination_render(ads) }}
+																										</ul>
+																									</span>
+																									<!--/ End Pagination --> #}
 											</div>
 										</div>
 									</div>
@@ -275,12 +240,12 @@
 											<div class="row">
 												<div
 													class="col-12">{# <!-- Pagination -->
-																											<span class="pagination-left">
-																												<ul class="pagination-list">
-																													{{ knp_pagination_render(ads) }}
-																												</ul>
-																											</span>
-																											<!--/ End Pagination --> #}
+																																									<span class="pagination-left">
+																																										<ul class="pagination-list">
+																																											{{ knp_pagination_render(ads) }}
+																																										</ul>
+																																									</span>
+																																									<!--/ End Pagination --> #}
 												</div>
 											</div>
 										</div>
